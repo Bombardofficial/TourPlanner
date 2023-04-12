@@ -47,7 +47,7 @@ public class ApplicationController implements Initializable, StageAware {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         stage.addListener((obv, o, n) -> n.setTitle(rb.getString("app.title")));
-        tbMonitorStatus.setGraphic(monitorStatusIcon);
+        //tbMonitorStatus.setGraphic(monitorStatusIcon);
     }
 
     @FXML

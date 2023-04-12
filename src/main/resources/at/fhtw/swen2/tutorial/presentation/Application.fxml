@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
@@ -20,14 +17,19 @@
          <menus>
             <Menu mnemonicParsing="false" text="%menu.file.title">
                <items>
-                  <MenuItem fx:id="miPreferences" mnemonicParsing="false" text="%menu.file.preferences" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="miPreferences" mnemonicParsing="false" text="%menu.file.about" />
                   <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onFileClose" text="%menu.file.quit" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="%menu.help.title">
+            <Menu mnemonicParsing="false" text="%menu.options.title">
                <items>
-                  <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.help.about" />
+                  <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.options.info" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%menu.edit.title">
+               <items>
+                  <MenuItem fx:id="miAbout1" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.edit.edit_log" />
                </items>
             </Menu>
          </menus>
@@ -42,6 +44,7 @@
                     <items>
                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
+                              <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="230.0" />
                                <fx:include source="view/NewPerson.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
@@ -66,13 +69,4 @@
         </tabs>
       </TabPane>
    </center>
-   <bottom>
-      <ToolBar maxHeight="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" BorderPane.alignment="CENTER">
-         <items>
-            <Label fx:id="tbMonitorStatus" />
-            <Label text="%tab.monitor.status" />
-            <Separator orientation="VERTICAL" />
-         </items>
-      </ToolBar>
-   </bottom>
 </BorderPane>
