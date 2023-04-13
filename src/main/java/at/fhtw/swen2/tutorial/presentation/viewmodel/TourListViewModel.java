@@ -31,7 +31,6 @@ public class TourListViewModel {
     public void addItem(Tour tour) {
         tourListItems.add(tour);
         masterData.add(tour);
-
     }
 
     public void clearItems(){ tourListItems.clear(); }

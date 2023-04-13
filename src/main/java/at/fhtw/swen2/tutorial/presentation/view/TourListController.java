@@ -35,9 +35,19 @@ public class TourListController implements Initializable{
         id.setCellValueFactory(new PropertyValueFactory("id"));
         TableColumn name = new TableColumn("NAME");
         name.setCellValueFactory(new PropertyValueFactory("name"));
-        TableColumn employed = new TableColumn("EMPLOYED");
-        employed.setCellValueFactory(new PropertyValueFactory("isEmployed"));
-        tableView.getColumns().addAll(id, name, employed);
+        TableColumn description = new TableColumn("DESCRIPTION");
+        description.setCellValueFactory(new PropertyValueFactory("description"));
+        TableColumn from = new TableColumn("FROM");
+        from.setCellValueFactory(new PropertyValueFactory("from"));
+        TableColumn to = new TableColumn("TO");
+        to.setCellValueFactory(new PropertyValueFactory("to"));
+        TableColumn transportType = new TableColumn("TRANSPORTTYPE");
+        transportType.setCellValueFactory(new PropertyValueFactory("transportType"));
+        TableColumn distance = new TableColumn("DISTANCE");
+        distance.setCellValueFactory(new PropertyValueFactory("distance"));
+        TableColumn estimatedTime = new TableColumn("ESTIMATEDTIME");
+        estimatedTime.setCellValueFactory(new PropertyValueFactory("estimatedTime"));
+        tableView.getColumns().addAll(id, name, description, from, to, transportType, distance, estimatedTime);
 
         dataContainer.getChildren().add(tableView);
         tourListViewModel.initList();
