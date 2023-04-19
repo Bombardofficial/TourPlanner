@@ -47,9 +47,9 @@
                                         <fx:include source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     </children>
                                 </AnchorPane>
-                                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" >
+                                <TabPane prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
                                     <tabs>
-                                        <Tab text="%tab.demo.title">
+                                        <Tab text="%tab.firsttab.title">
                                             <content>
                                                 <AnchorPane>
                                                     <children>
@@ -59,12 +59,15 @@
                                                 </AnchorPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="%tab.logs.title">
+                                        <Tab text="%tab.secondtab.title">
                                             <content>
                                                 <fx:include fx:id="logViewPane" source="view/LogViewPane.fxml" />
                                             </content>
                                         </Tab>
+
+
                                     </tabs>
+
                                 </TabPane>
 
                             </items>

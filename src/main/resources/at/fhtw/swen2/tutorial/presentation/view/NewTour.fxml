@@ -20,9 +20,9 @@
             </font>
         </Label>
         <Separator prefWidth="200.0" />
-        <Text text="new Person"/>
+        <Text text="Add new tour:"/>
         <TextField fx:id="nameTextField"/>
-        <Button fx:id="submitButton" onAction="#submitButtonAction" text="insert"/>
+        <Button fx:id="submitButton" onAction="#submitButtonAction" text="Insert"/>
         <Separator prefWidth="200.0" />
         <Text fx:id="feedbackText" />
     </children>

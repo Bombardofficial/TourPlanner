@@ -34,6 +34,7 @@ public class NewTourController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         nameTextField.textProperty().bindBidirectional(newTourViewModel.nameProperty());
+
     }
 
     public void submitButtonAction(ActionEvent event) {
