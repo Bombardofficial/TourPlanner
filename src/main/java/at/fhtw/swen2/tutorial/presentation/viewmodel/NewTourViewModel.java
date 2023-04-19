@@ -1,9 +1,7 @@
 package at.fhtw.swen2.tutorial.presentation.viewmodel;
 
 import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
-import at.fhtw.swen2.tutorial.service.PersonService;
 import at.fhtw.swen2.tutorial.service.TourService;
-import at.fhtw.swen2.tutorial.service.model.Person;
 import at.fhtw.swen2.tutorial.service.model.Tour;
 import javafx.beans.property.*;
 import org.springframework.beans.factory.annotation.Autowired;

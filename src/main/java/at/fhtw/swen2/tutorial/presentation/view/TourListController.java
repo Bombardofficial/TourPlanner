@@ -1,8 +1,6 @@
 package at.fhtw.swen2.tutorial.presentation.view;
 
-import at.fhtw.swen2.tutorial.presentation.viewmodel.PersonListViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
-import at.fhtw.swen2.tutorial.service.PersonService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;

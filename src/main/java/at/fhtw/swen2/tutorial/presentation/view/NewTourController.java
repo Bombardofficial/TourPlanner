@@ -1,10 +1,7 @@
 package at.fhtw.swen2.tutorial.presentation.view;
 
-import at.fhtw.swen2.tutorial.presentation.viewmodel.NewPersonViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourViewModel;
-import at.fhtw.swen2.tutorial.service.PersonService;
 import at.fhtw.swen2.tutorial.service.TourService;
-import at.fhtw.swen2.tutorial.service.model.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
