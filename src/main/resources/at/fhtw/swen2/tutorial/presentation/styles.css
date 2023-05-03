@@ -1,0 +1,205 @@
+/* Style the background */
+#layout {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Style the menu bar */
+.menu-bar {
+    -fx-background-color: #bcbcbc;
+    -fx-text-fill: white;
+}
+
+/* Style the menu items */
+.menu-item {
+    -fx-text-fill: white;
+}
+
+/* Style the search box */
+#searchBox {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+    -fx-prompt-text-fill: #888;
+}
+
+/* Style the new tour form */
+#newTourForm {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 20px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+}
+
+/* Style the tour list */
+#tourList {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 20px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+}
+
+/* Style the tabs */
+.tab-pane {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 20px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+}
+
+/* Style the log view pane */
+#logViewPane {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 20px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+}
+
+/* Style the tour form input fields */
+.input-field {
+    -fx-background-color: #f9f9f9;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #ccc;
+}
+
+/* Style the submit button */
+.submit-button {
+    -fx-background-color: #0077c2;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #0077c2;
+    -fx-cursor: hand;
+}
+
+/* Style the hover effect for buttons */
+.submit-button:hover {
+    -fx-background-color: #005ea3;
+}
+
+/* Style the selected tab */
+.tab:selected {
+    -fx-background-color: #0077c2;
+    -fx-text-fill: white;
+}
+
+/* Style the unselected tabs */
+.tab {
+    -fx-background-color: #f9f9f9;
+    -fx-text-fill: #222;
+}
+
+.tour-item {
+    -fx-background-color: white;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+}
+
+.tour-item:hover {
+    -fx-background-color: #F7F7F7;
+    -fx-border-color: #BBBBBB;
+}
+
+.tour-item .title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.tour-item .description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #777777;
+}
+
+.tour-item .distance-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.tour-item .distance-value {
+    -fx-font-size: 14px;
+}
+
+.tour-item .time-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.tour-item .time-value {
+    -fx-font-size: 14px;
+}
+
+.search-button {
+    -fx-background-color: #0040FF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+
+.search-button:hover {
+    -fx-background-color: #0066FF;
+}
+
+.tour-list {
+    -fx-padding: 20px;
+    -fx-background-color: #F7F7F7;
+}
+
+.tab-pane {
+    -fx-background-color: #FFFFFF;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab-header-background {
+    -fx-background-color: #FFFFFF;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-container .tab {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5px 5px 0px 0px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px 5px 0px 0px;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:hover .tab-container .tab {
+    -fx-background-color: #F7F7F7;
+}
+
+.log-view {
+    -fx-background-color: #F7F7F7;
+    -fx-padding: 10px;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-background-radius: 5px;
+}
+
+.log-view .log-entry {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-margin-bottom: 10px;
+}
+
+.log-view .log-entry:hover {
+    -fx-background-color: #F7F7F7;
+}

@@ -10,5 +10,7 @@ public interface TourService {
 
     Tour addNew(Tour tour);
 
+    void deleteTour(Tour tour);
+
 
 }

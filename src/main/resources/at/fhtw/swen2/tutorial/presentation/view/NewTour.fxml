@@ -14,6 +14,7 @@
 <?import at.fhtw.swen2.tutorial.persistence.entities.TransportType?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.TextArea?>
+<?import java.lang.String?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefWidth="200.0"
       spacing="8.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="at.fhtw.swen2.tutorial.presentation.view.NewTourController">
@@ -30,7 +31,7 @@
             <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
             <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextArea fx:id="descriptionTextArea" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="descriptionTextArea" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="(optional)"/>
 
             <Label text="From:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <TextField fx:id="fromTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -42,11 +43,11 @@
             <ChoiceBox fx:id="transportTypeChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <TransportType>CAR</TransportType>
-                        <TransportType>TRAIN</TransportType>
-                        <TransportType>PLANE</TransportType>
-                        <TransportType>BIKE</TransportType>
-                        <TransportType>WALK</TransportType>
+                        <String fx:value="CAR" />
+                        <String fx:value="TRAIN" />
+                        <String fx:value="PLANE" />
+                        <String fx:value="BIKE" />
+                        <String fx:value="WALK" />
                     </FXCollections>
                 </items>
             </ChoiceBox>
@@ -58,7 +59,7 @@
             <TextField fx:id="estimatedTimeTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
         </GridPane>
-        <Button fx:id="submitButton" onAction="#submitButtonAction" text="Insert"/>
+        <Button fx:id="submitButton" onAction="#submitButtonAction" text="Insert Tour"/>
         <Separator prefWidth="200.0" />
         <Text fx:id="feedbackText" />
     </children>

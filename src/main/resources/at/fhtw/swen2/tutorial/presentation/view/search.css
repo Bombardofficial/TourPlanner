@@ -2,3 +2,19 @@
     -fx-background-color: red;
     -fx-text-fill: white;
 }
+.tab-pane .tab-content .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-content .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.tab-pane .tab-content .scroll-pane .content .image-view {
+    -fx-background-color: transparent;
+
+}
+
+
+
+
