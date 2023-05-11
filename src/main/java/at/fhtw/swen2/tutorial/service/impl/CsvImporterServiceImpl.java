@@ -4,6 +4,8 @@ import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
 
 import at.fhtw.swen2.tutorial.service.model.Tour;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,9 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
+@Transactional
 public class CsvImporterServiceImpl implements CsvImporterService {
 
-    private static final String CSV_SEPARATOR = ",";
+    private static final String CSV_SEPARATOR = ";";
 
     public List<Tour> importFile(File file) throws Exception {
         List<Tour> tourList = new ArrayList<>();

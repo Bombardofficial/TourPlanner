@@ -6,5 +6,5 @@ import java.io.File;
 import java.util.List;
 
 public interface CsvImporterService {
-    public List<Tour> importFile(File file) throws Exception;
+    List<Tour> importFile(File file) throws Exception;
 }

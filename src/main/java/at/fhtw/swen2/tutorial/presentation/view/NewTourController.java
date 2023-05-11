@@ -93,15 +93,27 @@ public class NewTourController implements Initializable {
             errorMessage.append("Transport Type field cannot be empty.\n");
         }
 
-        float distance = Float.parseFloat(distanceTextField.getText());
-        if(distance == 0) {
-            errorMessage.append("Distance field cannot be empty.\n");
+        float distance = 0;
+        try {
+            distance = Float.parseFloat(distanceTextField.getText());
+            if(distance == 0) {
+                errorMessage.append("Distance field cannot be zero.\n");
+            }
+        } catch (NumberFormatException e) {
+            errorMessage.append("Distance field must be a number.\n");
         }
 
-        float estimatedTime = Float.parseFloat(estimatedTimeTextField.getText());
-        if(estimatedTime == 0) {
-            errorMessage.append("Estimated Time field cannot be empty.\n");
+        float estimatedTime = 0;
+         try {
+             estimatedTime = Float.parseFloat(estimatedTimeTextField.getText());
+            if(estimatedTime == 0) {
+                errorMessage.append("Estimated Time field cannot be zero.\n");
+            }
+         }
+        catch (NumberFormatException e) {
+            errorMessage.append("Estimated Time field must be a number.\n");
         }
+
 
         if(errorMessage.length() > 0) {
             // show error message in pop-up

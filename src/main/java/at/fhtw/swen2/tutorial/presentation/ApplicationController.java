@@ -2,6 +2,8 @@ package at.fhtw.swen2.tutorial.presentation;
 
 import at.fhtw.swen2.tutorial.presentation.view.ApplicationShutdownEvent;
 import at.fhtw.swen2.tutorial.presentation.view.AboutDialogController;
+import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
+import at.fhtw.swen2.tutorial.service.CsvExporterService;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
 import at.fhtw.swen2.tutorial.service.MapQuestService;
 import at.fhtw.swen2.tutorial.service.TourService;
@@ -13,13 +15,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -62,7 +63,21 @@ public class ApplicationController implements Initializable, StageAware {
     ImageView map;
 
 
+    @Autowired
+    public TourListViewModel tourListViewModel;
 
+    @FXML
+    public TableView tableView = new TableView<>();
+    @FXML
+    private VBox dataContainer;
+    private Tour selectedTour;
+
+    @Autowired
+    TourService tourService;
+    @Autowired
+    CsvExporterService exporter;
+    @Autowired
+    CsvImporterService csvImporterService;
     SimpleObjectProperty<Stage> stage = new SimpleObjectProperty<>();
 
     public ApplicationController(ApplicationEventPublisher publisher) {
@@ -73,68 +88,49 @@ public class ApplicationController implements Initializable, StageAware {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         stage.addListener((obv, o, n) -> n.setTitle(rb.getString("app.title")));
-        Image mapImage = mapQuestService.getMap("Mezobereny","Vienna");
+        Image mapImage = mapQuestService.getMap("Paris","Vienna");
         map.setImage(mapImage);
 
-        /*ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(map);
 
-// Center the image in the scroll pane
-        scrollPane.viewportBoundsProperty().addListener((observable, oldValue, newValue) -> {
-            double width = newValue.getWidth();
-            double height = newValue.getHeight();
-            double contentWidth = map.prefWidth(0);
-            double contentHeight = map.prefHeight(0);
+        tableView.setItems(tourListViewModel.getTourListItems());
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setRowFactory( tv -> {
+            TableRow<Tour> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    selectedTour = row.getItem();
+                    System.out.println(selectedTour.getFrom());
+                    System.out.println(selectedTour.getTo());
 
-            if (contentWidth < width) {
-                map.setLayoutX((width - contentWidth) / 2);
-            } else {
-                map.setLayoutX(0);
-            }
-
-            if (contentHeight < height) {
-                map.setLayoutY((height - contentHeight) / 2);
-            } else {
-                map.setLayoutY(0);
-            }
+                    Image nextMap = mapQuestService.getMap(selectedTour.getFrom(), selectedTour.getTo());
+                    map.setImage(nextMap);
+                    System.out.println("nextMap: " + nextMap);
+                }
+            });
+            return row;
         });
 
-        // Add zooming functionality
-        map.setOnScroll(event -> {
-            double delta = event.getDeltaY();
-            double scale = map.getScaleX();
-            double zoomFactor = 1.5;
+        TableColumn id = new TableColumn("ID");
+        id.setCellValueFactory(new PropertyValueFactory("id"));
+        TableColumn name = new TableColumn("NAME");
+        name.setCellValueFactory(new PropertyValueFactory("name"));
+        TableColumn description = new TableColumn("DESCRIPTION");
+        description.setCellValueFactory(new PropertyValueFactory("description"));
+        TableColumn from = new TableColumn("FROM");
+        from.setCellValueFactory(new PropertyValueFactory("from"));
+        TableColumn to = new TableColumn("TO");
+        to.setCellValueFactory(new PropertyValueFactory("to"));
+        TableColumn transportType = new TableColumn("TRANSPORT TYPE");
+        transportType.setCellValueFactory(new PropertyValueFactory("transportType"));
+        TableColumn distance = new TableColumn("DISTANCE (km)");
+        distance.setCellValueFactory(new PropertyValueFactory("distance"));
+        TableColumn estimatedTime = new TableColumn("ESTIMATED TIME (h)");
+        estimatedTime.setCellValueFactory(new PropertyValueFactory("estimatedTime"));
+        tableView.getColumns().addAll(id, name, description, from, to, transportType, distance, estimatedTime);
 
-            if (delta < 0) {
-                scale /= zoomFactor;
-            } else {
-                scale *= zoomFactor;
-            }
+        dataContainer.getChildren().add(tableView);
+        tourListViewModel.initList();
 
-            map.setScaleX(scale);
-            map.setScaleY(scale);
-
-            // Re-center the image after zooming
-            double width = scrollPane.getViewportBounds().getWidth();
-            double height = scrollPane.getViewportBounds().getHeight();
-            double contentWidth = map.prefWidth(0);
-            double contentHeight = map.prefHeight(0);
-
-            if (contentWidth < width) {
-                map.setLayoutX((width - contentWidth) / 2);
-            } else {
-                map.setLayoutX(0);
-            }
-
-            if (contentHeight < height) {
-                map.setLayoutY((height - contentHeight) / 2);
-            } else {
-                map.setLayoutY(0);
-            }
-        });
-
-        Tab tab = new Tab("%tab.secondtab.title");
-        tab.setContent(scrollPane);*/
     }
 
     @FXML
@@ -161,10 +157,9 @@ public class ApplicationController implements Initializable, StageAware {
 
         // If a file was selected, export the data to the file
         if (file != null) {
-            TourService tourService = new TourServiceImpl();
             List<Tour> tourList = tourService.getTourList();
             System.out.println(tourList);
-            CsvExporterServiceImpl exporter = new CsvExporterServiceImpl();
+
             exporter.export(file, tourList);
         }
     }
@@ -184,14 +179,14 @@ public class ApplicationController implements Initializable, StageAware {
 
         // If a file was selected, import the data from the file
         if (file != null) {
-            TourService tourService = new TourServiceImpl();
-            CsvImporterService csvImporterService = new CsvImporterServiceImpl();
+
             try {
                 List<Tour> tours = csvImporterService.importFile(file);
                 for (Tour tour : tours) {
                     tourService.addNew(tour);
                 }
-
+                tourListViewModel.clearItems();
+                tourListViewModel.initList();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {

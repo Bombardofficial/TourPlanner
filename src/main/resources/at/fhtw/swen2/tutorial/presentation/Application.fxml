@@ -78,7 +78,11 @@
                                         <children>
                                             <TabPane prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
                                                 <Tab text="%tab.bottomtab.title">
-                                                    <fx:include source="view/TourList.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                                                    <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+                                                        <children>
+                                                            <VBox fx:id="dataContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        </children>
+                                                    </AnchorPane>
                                                 </Tab>
                                             </TabPane>
                                         </children>
