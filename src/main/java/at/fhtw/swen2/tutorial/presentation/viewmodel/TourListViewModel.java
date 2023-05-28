@@ -39,15 +39,21 @@ public class TourListViewModel {
         });
     }
 
-    public void filterList(String searchText){
+    public void filterList(String searchText){ //filtering bei namen
         Task<List<Tour>> task = new Task<>() {
             @Override
             protected List<Tour> call() throws Exception {
                 updateMessage("Loading data");
                 return masterData
                         .stream()
-                        .filter(value -> value.getName().toLowerCase().contains(searchText.toLowerCase()))
-                        .collect(Collectors.toList());
+                        .filter(value -> value.getName().toLowerCase().contains(searchText.toLowerCase())
+                                || value.getDescription().toLowerCase().contains(searchText.toLowerCase())
+                                || value.getFrom().toLowerCase().contains(searchText.toLowerCase())
+                                || value.getTo().toLowerCase().contains(searchText.toLowerCase())
+                                || String.valueOf(value.getTransportType()).toLowerCase().contains(searchText.toLowerCase())
+                                || String.valueOf(value.getDistance()).toLowerCase().contains(searchText.toLowerCase())
+                                || String.valueOf(value.getEstimatedTime()).toLowerCase().contains(searchText.toLowerCase())
+                        ).collect(Collectors.toList());
             }
         };
 
