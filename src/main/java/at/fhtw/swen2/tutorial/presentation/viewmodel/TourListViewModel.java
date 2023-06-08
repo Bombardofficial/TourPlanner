@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class TourListViewModel {
 
     @Autowired
-    TourService tourService;
+    private TourService tourService;
 
 
     private List<Tour> masterData = new ArrayList<>();

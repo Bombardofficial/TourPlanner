@@ -1,10 +1,12 @@
 package at.fhtw.swen2.tutorial.presentation.view;
 
+import at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.LogEntry;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.LogEntry.Type;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,16 +30,29 @@ public class LogViewController implements Initializable {
     @FXML
     Button clearButton;
 
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextArea commentTextArea;
+    @FXML
+    private ChoiceBox<TourDifficulty> tourDifficultyChoiceBox;
+    @FXML
+    private TextField totalTimeTextField;
+    @FXML
+    private TextField ratingTextField;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTable();
         initilizeClearButton();
     }
 
+    //a helper method that binds the disableProperty of the clear button to the condition of whether the log table is empty. If the table is empty, the clear button will be disabled.
     void initilizeClearButton() {
         clearButton.disableProperty().bind(Bindings.isEmpty(logTable.getItems()));
     }
 
+    // method that sets up the log table
     @SuppressWarnings("unchecked")
     void initializeTable() {
         ObservableList<LogEntry> entries = FXCollections.observableArrayList();
@@ -55,7 +70,7 @@ public class LogViewController implements Initializable {
             }
         });
 
-        TableColumn<LogEntry, Type> typeColumn = new TableColumn<>("Type");
+        TableColumn<LogEntry, Type> typeColumn = new TableColumn<>("Comment");
         typeColumn.setSortable(false);
         typeColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
         typeColumn.setCellValueFactory(value -> value.getValue().getType()); // replaced with image
@@ -68,7 +83,7 @@ public class LogViewController implements Initializable {
         TableColumn<LogEntry, String> messageColumn = new TableColumn<>("Message");
         messageColumn.setSortable(false);
         messageColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.5));
-        messageColumn.setCellValueFactory(value -> value.getValue().getMessage());
+        messageColumn.setCellValueFactory(value -> value.getValue().getComment());
         messageColumn.setMaxWidth(Double.MAX_VALUE);
 
         logTable.getColumns().addAll(dateColumn, typeColumn, systemColumn, messageColumn);
@@ -79,4 +94,5 @@ public class LogViewController implements Initializable {
         log.debug("Clearing debug log data");
         logTable.getItems().clear();
     }
+
 }

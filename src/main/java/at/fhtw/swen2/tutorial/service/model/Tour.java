@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import java.util.List;
 
 
 @Data
@@ -20,5 +21,8 @@ public class Tour {
     private TransportType transportType;
     private float distance;
     private float estimatedTime;
+
+    private List<TourLog> tourLogs;
+
 }
 

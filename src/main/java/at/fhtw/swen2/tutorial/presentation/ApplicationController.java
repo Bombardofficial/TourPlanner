@@ -11,14 +11,18 @@ import at.fhtw.swen2.tutorial.service.impl.CsvExporterServiceImpl;
 import at.fhtw.swen2.tutorial.service.impl.CsvImporterServiceImpl;
 import at.fhtw.swen2.tutorial.service.impl.TourServiceImpl;
 import at.fhtw.swen2.tutorial.service.model.Tour;
+import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
@@ -35,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
@@ -50,6 +55,11 @@ public class ApplicationController implements Initializable, StageAware {
     @FXML MenuItem miPreferences;
     @FXML MenuItem miQuit;
     @FXML MenuItem miAbout;
+
+    @FXML
+    private AnchorPane dataContainer2;
+
+    private boolean showTour = true; // Initially show Tour.fxml
     
     // Toolbar, at some point break out
     @FXML Label tbMonitorStatus;
@@ -194,6 +204,31 @@ public class ApplicationController implements Initializable, StageAware {
             }
         }
     }
+
+    @FXML
+    private void addNewTourLog(ActionEvent event) {
+        try {
+            if (showTour) {
+                dataContainer.getChildren().remove(tableView);
+                // Load and display TourLog.fxml
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TourLog.fxml"));
+                Parent tourLogRoot = loader.load();
+                dataContainer.getChildren().setAll(tourLogRoot);
+                showTour = false;
+            } else {
+                // Load and display Tour.fxml
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Tour.fxml"));
+                Parent tourRoot = loader.load();
+                dataContainer.getChildren().setAll(tourRoot);
+                showTour = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     @Override
     public void setStage(Stage stage) {

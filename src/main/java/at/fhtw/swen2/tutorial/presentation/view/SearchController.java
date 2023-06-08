@@ -27,12 +27,12 @@ public class SearchController {
     private Button searchButton;
     @FXML
     private Label searchLabel;
-
+// private CheckBox searchTourLogsCheckbox;
     @FXML
     private void initialize() {
 
         searchField.textProperty().bindBidirectional(searchViewModel.searchStringProperty());
-
+     //   searchTourLogsCheckbox.selectedProperty().bindBidirectional(searchViewModel.searchForTourLogsProperty());
         // search panel
         searchButton.setText("Search");
         searchButton.setOnAction(event -> loadData());
