@@ -43,6 +43,18 @@ public class NewTourViewModel {
         this.estimatedTime = new SimpleFloatProperty(tour.getEstimatedTime());
     }
 
+    public void setTour(Tour tour) {
+        this.tour = tour;
+        this.id = new SimpleLongProperty(tour.getId());
+        this.name = new SimpleStringProperty(tour.getName());
+        this.description = new SimpleStringProperty(tour.getDescription());
+        this.from = new SimpleStringProperty(tour.getFrom());
+        this.to = new SimpleStringProperty(tour.getTo());
+        this.transportType = new SimpleObjectProperty<>(tour.getTransportType());
+        this.distance = new SimpleFloatProperty(tour.getDistance());
+        this.estimatedTime = new SimpleFloatProperty(tour.getEstimatedTime());
+    }
+
     public Long getId() {
         return id.get();
     }
@@ -151,6 +163,18 @@ public class NewTourViewModel {
                 .transportType(getTransportType())
                 .build();
         tour = tourService.addNew(tour);
+        tourListViewModel.addItem(tour);
+    }
+
+    public void updateTour() {
+        tour.setName(getName());
+        tour.setDescription(getDescription());
+        tour.setFrom(getFrom());
+        tour.setTo(getTo());
+        tour.setDistance(getDistance());
+        tour.setEstimatedTime(getEstimatedTime());
+        tour.setTransportType(getTransportType());
+        tourService.addNew(tour);
         tourListViewModel.addItem(tour);
     }
 

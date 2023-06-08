@@ -34,6 +34,8 @@ public class TourListViewModel {
     public void clearItems(){ tourListItems.clear(); }
 
     public void initList(){
+        masterData.clear();
+        tourListItems.clear();
         tourService.getTourList().forEach(t -> {
             addItem(t);
         });

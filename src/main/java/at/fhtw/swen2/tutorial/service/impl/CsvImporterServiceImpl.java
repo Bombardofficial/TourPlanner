@@ -3,7 +3,9 @@ package at.fhtw.swen2.tutorial.service.impl;
 import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
 
+import at.fhtw.swen2.tutorial.service.MapQuestService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,9 @@ import java.util.List;
 public class CsvImporterServiceImpl implements CsvImporterService {
 
     private static final String CSV_SEPARATOR = ";";
+
+    @Autowired
+    public MapQuestService mapQuestService;
 
     public List<Tour> importFile(File file) throws Exception {
         List<Tour> tourList = new ArrayList<>();

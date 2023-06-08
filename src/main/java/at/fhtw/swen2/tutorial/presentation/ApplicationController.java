@@ -2,16 +2,13 @@ package at.fhtw.swen2.tutorial.presentation;
 
 import at.fhtw.swen2.tutorial.presentation.view.ApplicationShutdownEvent;
 import at.fhtw.swen2.tutorial.presentation.view.AboutDialogController;
+import at.fhtw.swen2.tutorial.presentation.view.ModifyTourController;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
-import at.fhtw.swen2.tutorial.service.CsvExporterService;
+import at.fhtw.swen2.tutorial.service.ExporterService;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
 import at.fhtw.swen2.tutorial.service.MapQuestService;
 import at.fhtw.swen2.tutorial.service.TourService;
-import at.fhtw.swen2.tutorial.service.impl.CsvExporterServiceImpl;
-import at.fhtw.swen2.tutorial.service.impl.CsvImporterServiceImpl;
-import at.fhtw.swen2.tutorial.service.impl.TourServiceImpl;
 import at.fhtw.swen2.tutorial.service.model.Tour;
-import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,13 +30,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
@@ -47,6 +44,7 @@ import java.util.ResourceBundle;
 @Slf4j
 public class ApplicationController implements Initializable, StageAware {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationController.class);
     ApplicationEventPublisher publisher;
 
     @FXML BorderPane layout;
@@ -85,10 +83,16 @@ public class ApplicationController implements Initializable, StageAware {
     @Autowired
     TourService tourService;
     @Autowired
-    CsvExporterService exporter;
+    ExporterService exporter;
     @Autowired
     CsvImporterService csvImporterService;
     SimpleObjectProperty<Stage> stage = new SimpleObjectProperty<>();
+    @Autowired
+    private ViewManager viewManager;
+
+    @Autowired
+    private ModifyTourController modifyTourController;
+
 
     public ApplicationController(ApplicationEventPublisher publisher) {
         log.debug("Initializing application controller");
@@ -117,6 +121,51 @@ public class ApplicationController implements Initializable, StageAware {
                     System.out.println("nextMap: " + nextMap);
                 }
             });
+
+            // create a menu
+            ContextMenu contextMenu = new ContextMenu();
+
+            // create menuitems
+            MenuItem menuItem1 = new MenuItem("Modify");
+            MenuItem menuItem2 = new MenuItem("Delete");
+            MenuItem menuItem3 = new MenuItem("Export");
+            menuItem1.setOnAction((event) -> {
+                selectedTour = row.getItem();
+                try {
+                    modify(selectedTour);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            menuItem2.setOnAction((event) -> {
+                selectedTour = row.getItem();
+                delete(selectedTour);
+            });
+
+            menuItem3.setOnAction((event) -> {
+                selectedTour = row.getItem();
+                try {
+                    exportOne(selectedTour);
+                } catch (IOException e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText("Error");
+                    alert.setContentText("Could not export tour");
+                    logger.error("Export problem: Tour");
+                    alert.showAndWait();
+                }
+            });
+
+            // add menu items to menu
+            contextMenu.getItems().add(menuItem1);
+            contextMenu.getItems().add(menuItem2);
+            contextMenu.getItems().add(menuItem3);
+
+            row.setContextMenu(contextMenu);
+
+
+
             return row;
         });
 
@@ -142,6 +191,45 @@ public class ApplicationController implements Initializable, StageAware {
         tourListViewModel.initList();
 
     }
+    private void exportOne(Tour selectedTour) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Tour");
+        fileChooser.setInitialFileName(selectedTour.getName() + ".pdf");
+        File file = fileChooser.showSaveDialog(stage.getValue());
+        if (file != null) {
+            exporter.exportOne(file, selectedTour);
+        }
+    }
+
+
+    private void delete(Tour selectedTour) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + selectedTour.getName() + " ?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            tourService.deleteTour(selectedTour);
+            tourListViewModel.initList();
+        }
+
+    }
+
+    private void modify(Tour selectedTour) throws  IOException {
+
+        Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/ModifyTour", stage.getValue());
+
+
+        dialog.initOwner(stage.getValue());
+        dialog.setTitle("Modify Tour");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        modifyTourController.setTour(selectedTour);
+
+        dialog.showAndWait();
+
+
+
+        tourListViewModel.initList();
+    }
+
 
     @FXML
     public void onFileClose(ActionEvent event) {
@@ -153,7 +241,7 @@ public class ApplicationController implements Initializable, StageAware {
         new AboutDialogController().show();
     }
     @FXML
-    private void onExport() {
+    private void onExport() throws IOException {
         // Create a new FileChooser dialog
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Export Tour Data");
@@ -161,6 +249,8 @@ public class ApplicationController implements Initializable, StageAware {
         // Set the extension filters
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilterPDF);
 
         // Show the dialog and wait for user input
         File file = fileChooser.showSaveDialog(null);
@@ -170,7 +260,15 @@ public class ApplicationController implements Initializable, StageAware {
             List<Tour> tourList = tourService.getTourList();
             System.out.println(tourList);
 
-            exporter.export(file, tourList);
+            if(fileChooser.getSelectedExtensionFilter().equals(extFilterPDF))
+            {
+                exporter.exportPDF(file, tourList);
+            }
+            else if(fileChooser.getSelectedExtensionFilter().equals(extFilter))
+            {
+                exporter.exportCSV(file, tourList);
+            }
+
         }
     }
 

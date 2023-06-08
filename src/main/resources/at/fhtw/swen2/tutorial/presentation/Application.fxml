@@ -81,8 +81,8 @@
                     <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
                     <fx:include fx:id="tour" source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 </children>
-               <!-- <Button text="Add Tour" onAction="#addNewTour" /> -->
-                <Button text="Add TourLog" onAction="#addNewTourLog" />
+               <!-- <Button text="Add Tour" onAction="#addNewTour" />
+                <Button text="Add TourLog" onAction="#addNewTourLog" />-->
             </AnchorPane>
 
 

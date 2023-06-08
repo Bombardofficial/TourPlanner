@@ -3,7 +3,7 @@ package at.fhtw.swen2.tutorial.presentation.view;
 import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourViewModel;
 import at.fhtw.swen2.tutorial.service.TourService;
-import javafx.collections.FXCollections;
+import at.fhtw.swen2.tutorial.service.model.Tour;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +16,6 @@ import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,15 +23,14 @@ import java.util.ResourceBundle;
 @Component
 //@Scope("prototype")
 @Slf4j
-public class NewTourController implements Initializable {
+public class ModifyTourController implements Initializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewTourController.class);
     @Autowired
     private TourService tourService;
     @Autowired
     private SearchController searchController;
     @Autowired
-    private NewTourViewModel newTourViewModel;
+    private NewTourViewModel newTourViewModel;// = new NewTourViewModel();
 
     @FXML
     private Text feedbackText;
@@ -54,26 +51,17 @@ public class NewTourController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle rb) {
-        nameTextField.textProperty().bindBidirectional(newTourViewModel.nameProperty());
-        descriptionTextArea.textProperty().bindBidirectional(newTourViewModel.descriptionProperty());
-        fromTextField.textProperty().bindBidirectional(newTourViewModel.fromProperty());
-        toTextField.textProperty().bindBidirectional(newTourViewModel.toProperty());
-        transportTypeChoiceBox.getItems().setAll(TransportType.values());
-        newTourViewModel.transportTypeProperty().bindBidirectional(transportTypeChoiceBox.valueProperty());
-        distanceTextField.textProperty().bindBidirectional(newTourViewModel.distanceProperty(), new NumberStringConverter());
-        estimatedTimeTextField.textProperty().bindBidirectional(newTourViewModel.estimatedTimeProperty(), new NumberStringConverter());
-
     }
 
-    public void submitButtonAction(ActionEvent event) {
+    public void modifyButtonAction(ActionEvent event) {
         if(validateInput()) {
             newTourViewModel.setTransportType(transportTypeChoiceBox.getValue());
-            newTourViewModel.addNewTour();
-            feedbackText.setText("Tour added successfully");
-            logger.info("New tour has been added successfully");
+            newTourViewModel.updateTour(); // Call the updateTour method to update the selected tour
+            feedbackText.setText("Tour modified successfully");
         }
-
     }
+
+
     private boolean validateInput() {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -108,12 +96,12 @@ public class NewTourController implements Initializable {
         }
 
         float estimatedTime = 0;
-         try {
-             estimatedTime = Float.parseFloat(estimatedTimeTextField.getText());
+        try {
+            estimatedTime = Float.parseFloat(estimatedTimeTextField.getText());
             if(estimatedTime == 0) {
                 errorMessage.append("Estimated Time field cannot be zero.\n");
             }
-         }
+        }
         catch (NumberFormatException e) {
             errorMessage.append("Estimated Time field must be a number.\n");
         }
@@ -124,7 +112,6 @@ public class NewTourController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Some required fields are not filled.");
-            logger.error("Fields are not fulfilled at new tour creation");
             alert.setContentText(errorMessage.toString());
             alert.showAndWait();
             return false;
@@ -133,4 +120,17 @@ public class NewTourController implements Initializable {
         }
     }
 
+    public void setTour(Tour selectedTour) {
+        System.out.println("setTour called");
+        //newTourViewModel = new NewTourViewModel(selectedTour);
+        newTourViewModel.setTour(selectedTour);
+        nameTextField.textProperty().bindBidirectional(newTourViewModel.nameProperty());
+        descriptionTextArea.textProperty().bindBidirectional(newTourViewModel.descriptionProperty());
+        fromTextField.textProperty().bindBidirectional(newTourViewModel.fromProperty());
+        toTextField.textProperty().bindBidirectional(newTourViewModel.toProperty());
+        transportTypeChoiceBox.getItems().setAll(TransportType.values());
+        transportTypeChoiceBox.valueProperty().bindBidirectional(newTourViewModel.transportTypeProperty());
+        distanceTextField.textProperty().bindBidirectional(newTourViewModel.distanceProperty(), new NumberStringConverter());
+        estimatedTimeTextField.textProperty().bindBidirectional(newTourViewModel.estimatedTimeProperty(), new NumberStringConverter());
+    }
 }
