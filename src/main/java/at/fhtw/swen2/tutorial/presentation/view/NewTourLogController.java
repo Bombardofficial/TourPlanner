@@ -65,7 +65,7 @@ public class NewTourLogController implements Initializable {
         totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
         ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
 
-
+/*
         TableColumn<TourLog, String> commentColumn = new TableColumn<>("Comment");
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
@@ -78,7 +78,7 @@ public class NewTourLogController implements Initializable {
         TableColumn<TourLog, Integer> ratingColumn = new TableColumn<>("Rating");
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-        tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn);
+        tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn); */
     }
 
     public void submitButtonAction(ActionEvent event) {

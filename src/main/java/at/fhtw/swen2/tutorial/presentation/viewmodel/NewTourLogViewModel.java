@@ -86,8 +86,9 @@ public class NewTourLogViewModel {
     }
 
     public void createTourLog() {
-        if (selectedTour != null) {
-            Tour tour = selectedTour;
+      //  if (selectedTour != null)
+        //  {
+       // Tour tour = selectedTour;
             TourLog tourLog = TourLog.builder()
 
                     //datetime
@@ -98,9 +99,9 @@ public class NewTourLogViewModel {
                     .rating(getRating())
 
                     .build();
-         //   tourLog = tourService.addTourLog(tourLog);
-         //    tourListLogViewModel.addItem(tourService.addTourLog( tourLog));
+            tourLog = tourService.addTourLog(tourLog);
+            tourListLogViewModel.addItem(tourLog);
         }
     }
 
-}
+

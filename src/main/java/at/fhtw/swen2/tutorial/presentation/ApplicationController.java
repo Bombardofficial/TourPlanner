@@ -3,6 +3,7 @@ package at.fhtw.swen2.tutorial.presentation;
 import at.fhtw.swen2.tutorial.presentation.view.ApplicationShutdownEvent;
 import at.fhtw.swen2.tutorial.presentation.view.AboutDialogController;
 import at.fhtw.swen2.tutorial.presentation.view.ModifyTourController;
+import at.fhtw.swen2.tutorial.presentation.view.NewTourLogController;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
 import at.fhtw.swen2.tutorial.service.ExporterService;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
@@ -93,6 +94,8 @@ public class ApplicationController implements Initializable, StageAware {
     @Autowired
     private ModifyTourController modifyTourController;
 
+    @Autowired
+    private NewTourLogController newTourLogController;
 
     public ApplicationController(ApplicationEventPublisher publisher) {
         log.debug("Initializing application controller");
@@ -129,6 +132,8 @@ public class ApplicationController implements Initializable, StageAware {
             MenuItem menuItem1 = new MenuItem("Modify");
             MenuItem menuItem2 = new MenuItem("Delete");
             MenuItem menuItem3 = new MenuItem("Export");
+            MenuItem menuItem4 = new MenuItem("Add TourLog");
+
             menuItem1.setOnAction((event) -> {
                 selectedTour = row.getItem();
                 try {
@@ -157,10 +162,21 @@ public class ApplicationController implements Initializable, StageAware {
                 }
             });
 
+            menuItem4.setOnAction((event) -> {
+                selectedTour = row.getItem();
+                try {
+                    addNewTourLog(selectedTour);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+
             // add menu items to menu
             contextMenu.getItems().add(menuItem1);
             contextMenu.getItems().add(menuItem2);
             contextMenu.getItems().add(menuItem3);
+            contextMenu.getItems().add(menuItem4);
 
             row.setContextMenu(contextMenu);
 
@@ -202,7 +218,7 @@ public class ApplicationController implements Initializable, StageAware {
     }
 
 
-    private void delete(Tour selectedTour) {
+   private void delete(Tour selectedTour) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + selectedTour.getName() + " ?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
 
@@ -222,6 +238,23 @@ public class ApplicationController implements Initializable, StageAware {
         dialog.setTitle("Modify Tour");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         modifyTourController.setTour(selectedTour);
+
+        dialog.showAndWait();
+
+
+
+        tourListViewModel.initList();
+    }
+
+    private void addNewTourLog(Tour selectedTour) throws  IOException {
+
+        Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/NewTourLog", stage.getValue());
+
+
+        dialog.initOwner(stage.getValue());
+        dialog.setTitle("Add new TourLog");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        newTourLogViewModel.createTourLog(selectedTour);
 
         dialog.showAndWait();
 
@@ -302,7 +335,7 @@ public class ApplicationController implements Initializable, StageAware {
             }
         }
     }
-
+/*
     @FXML
     private void addNewTourLog(ActionEvent event) {
         try {
@@ -324,7 +357,7 @@ public class ApplicationController implements Initializable, StageAware {
             e.printStackTrace();
         }
     }
-
+*/
 
 
 

@@ -15,7 +15,9 @@ public interface TourService {
 
     void deleteTour(Tour tour);
 
-   // public void addTourLog(Tour tour, TourLog tourLog);
+    TourLog addTourLog(TourLog tourLog);
+
+    List<TourLog> getTourLogList(Long tourId);
 
 
 }

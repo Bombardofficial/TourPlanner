@@ -22,7 +22,7 @@ public class Tour {
     private float distance;
     private float estimatedTime;
 
-    private List<TourLog> tourLogs;
+   // private List<TourLog> tourLogs;
 
 }
 

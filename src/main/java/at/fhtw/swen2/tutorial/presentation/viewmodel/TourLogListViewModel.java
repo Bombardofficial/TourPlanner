@@ -20,23 +20,29 @@ public class TourLogListViewModel {
     private TourService tourService;
 
     private List<TourLog> masterData = new ArrayList<>();
-    private ObservableList<TourLog> tourLogItems = FXCollections.observableArrayList();
+    private ObservableList<TourLog> tourLogListItems = FXCollections.observableArrayList();
 
     public ObservableList<TourLog> getTourLogItems() {
-        return tourLogItems;
+        return tourLogListItems;
     }
 
+    private Long tourId = Long.valueOf(0);
+
     public void addItem(TourLog tourLog) {
-        tourLogItems.add(tourLog);
+        tourLogListItems.add(tourLog);
         masterData.add(tourLog);
     }
 
     public void clearItems() {
-        tourLogItems.clear();
+        tourLogListItems.clear();
     }
 
-    public void initList(Tour tour) {
-        tourLogItems.setAll(tour.getTourLogs());
+    public void initList() {
+        clearItems();
+        // tourLogListItems.clear();
+        tourService.getTourLogList(tourId).forEach(t -> {
+            addItem(t);
+        });
     }
 
     public void filterList(String searchText) {
@@ -53,7 +59,7 @@ public class TourLogListViewModel {
             }
         };
 
-        task.setOnSucceeded(event -> tourLogItems.setAll(task.getValue()));
+        task.setOnSucceeded(event -> tourLogListItems.setAll(task.getValue()));
 
         Thread th = new Thread(task);
         th.setDaemon(true);
