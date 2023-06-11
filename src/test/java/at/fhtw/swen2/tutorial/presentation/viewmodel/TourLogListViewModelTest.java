@@ -1,17 +1,10 @@
 package at.fhtw.swen2.tutorial.presentation.viewmodel;
 
-import at.fhtw.swen2.tutorial.service.model.Tour;
 import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.collections.ObservableList;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty.easy;
-import static at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty.moderate;
-import static java.util.Collections.addAll;
+import static at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TourLogListViewModelTest {
@@ -25,7 +18,7 @@ class TourLogListViewModelTest {
         TourLog log1 = TourLog.builder()
                 .comment("cha cha cha")
                // .LocalDateTime(2007-12-03T15:30:30.)
-                .tourDifficulty(moderate)
+                .tourDifficulty(MODERATE)
                 .totalTourTime(2)
                 .rating(4)
                 .build();
@@ -47,7 +40,7 @@ class TourLogListViewModelTest {
         TourLog log1 = TourLog.builder()
                 .comment("cha cha cha")
                 // .LocalDateTime(2007-12-03T15:30:30.)
-                .tourDifficulty(moderate)
+                .tourDifficulty(MODERATE)
                 .totalTourTime(2)
                 .rating(4)
                 .build();
@@ -55,7 +48,7 @@ class TourLogListViewModelTest {
         TourLog log2 = TourLog.builder()
                 .comment("schön wars")
                 // .LocalDateTime(2007-12-03T15:30:30.)
-                .tourDifficulty(easy)
+                .tourDifficulty(EASY)
                 .totalTourTime(2)
                 .rating(4)
                 .build();

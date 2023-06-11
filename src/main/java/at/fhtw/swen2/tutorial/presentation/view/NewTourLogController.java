@@ -35,6 +35,7 @@ public class NewTourLogController implements Initializable {
     @Autowired
     private SearchController searchController;
 
+    @Autowired
     private NewTourLogViewModel newTourLogViewModel;
 
     @Autowired
@@ -63,6 +64,9 @@ public class NewTourLogController implements Initializable {
     private VBox dataContainer;
 
     private Tour selectedTour;
+
+    public NewTourLogController() {
+    }
 
 
     @Override
@@ -96,8 +100,8 @@ public class NewTourLogController implements Initializable {
 
         dataContainer.getChildren().add(tableView);
         tourLogListViewModel.initList();
-        */
 
+*/
     }
 
 
@@ -163,14 +167,31 @@ public class NewTourLogController implements Initializable {
             return true;
         }
     }
-
-    public void setTourLog(TourLog log, Tour selectedTour) {
-        newTourLogViewModel.setTourLog(log, selectedTour);
+/*
+    public void setTourLog(TourLog tourLog) {
+        newTourLogViewModel.setTourLog(tourLog);
         commentTextArea.textProperty().bindBidirectional(newTourLogViewModel.commentProperty());
         tourDifficultyChoiceBox.getItems().setAll(TourDifficulty.values());
         newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
         totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
         ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
+    }*/
+public void setTourLog(TourLog tourLog, Tour tour) {
+
+    // Set the properties of the tourLog object based on user input or other sources
+    tourLog.setComment(commentTextArea.getText());
+    tourLog.setComment(commentTextArea.getText());
+    tourLog.setTourDifficulty(tourDifficultyChoiceBox.getValue());
+    tourLog.setTotalTourTime(Float.parseFloat(totalTourTimeField.getText()));
+    tourLog.setRating(Integer.parseInt(ratingField.getText()));
+
+    // Pass the newly created tourLog object to the newTourLogViewModel
+    newTourLogViewModel.setTourLog(tourLog, tour);
+}
+
+
+    public void setNewTourLogViewModel(NewTourLogViewModel newTourLogViewModel) {
+        this.newTourLogViewModel = newTourLogViewModel;
     }
 
 

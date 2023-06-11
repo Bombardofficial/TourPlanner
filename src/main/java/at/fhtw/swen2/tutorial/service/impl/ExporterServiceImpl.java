@@ -1,5 +1,6 @@
 package at.fhtw.swen2.tutorial.service.impl;
 
+import at.fhtw.swen2.tutorial.persistence.entities.TourLogEntity;
 import at.fhtw.swen2.tutorial.service.MapQuestService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
 
@@ -9,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import at.fhtw.swen2.tutorial.service.ExporterService;
+import at.fhtw.swen2.tutorial.service.model.TourLog;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
@@ -24,7 +26,7 @@ import com.itextpdf.layout.properties.UnitValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import at.fhtw.swen2.tutorial.persistence.repositories.TourLogRepository;
 import javax.swing.text.StyleConstants;
 
 @Service
@@ -35,6 +37,9 @@ public class ExporterServiceImpl implements ExporterService {
 
     @Autowired
     public MapQuestService mapQuestService;
+    @Autowired
+    private TourLogRepository tourLogRepository;
+
 
     public void exportCSV(File file, List<Tour> tourList) {
         try (FileWriter writer = new FileWriter(file)) {
@@ -86,7 +91,7 @@ public class ExporterServiceImpl implements ExporterService {
         var pdf = new PdfDocument(writer);
         var document = new Document(pdf);
 
-        Paragraph header = new Paragraph("Tour List")
+        Paragraph header = new Paragraph("Summary report:")
                 .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                 .setFontSize(18)
                 .setBold()
@@ -131,7 +136,7 @@ public class ExporterServiceImpl implements ExporterService {
         var pdf = new PdfDocument(writer);
         var document = new Document(pdf);
 
-        Paragraph header = new Paragraph("Tour List")
+        Paragraph header = new Paragraph(tour.getName()+"'s report:")
                 .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                 .setFontSize(18)
                 .setBold()
@@ -163,11 +168,34 @@ public class ExporterServiceImpl implements ExporterService {
 
         document.add(table);
 
+        List<TourLogEntity> tourLogs = tourLogRepository.findByTourId(tour.getId());
+        if (!tourLogs.isEmpty()) {
+            document.add(new Paragraph("Tour Logs:").setFontSize(12).setBold());
+
+            Table logTable = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
+            logTable.addHeaderCell("Date");
+            logTable.addHeaderCell("Comment");
+            logTable.addHeaderCell("Difficulty");
+            logTable.addHeaderCell("Total Tour Time");
+            logTable.addHeaderCell("Rating");
+            logTable.setFontSize(10);
+            logTable.setFontColor(ColorConstants.BLACK);
+
+            for (TourLogEntity tourLogEntity : tourLogs) {
+              //  logTable.addCell(tourLogEntity.getDate().toString());
+                logTable.addCell(tourLogEntity.getComment());
+                logTable.addCell(String.valueOf(tourLogEntity.getDifficulty()));
+                logTable.addCell(Float.toString(tourLogEntity.getTotalTourTime()));
+                logTable.addCell(Integer.toString(tourLogEntity.getRating()));
+            }
+
+            document.add(logTable);
+        }
+
         Paragraph imageHeader = new Paragraph("Map")
                 .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
-                .setFontSize(18)
-                .setBold()
-                .setFontColor(ColorConstants.RED);
+                .setFontSize(12)
+                .setBold();
         document.add(imageHeader);
         ImageData data = ImageDataFactory.create(mapQuestService.getMapByteArray(tour.getFrom(), tour.getTo()));
 

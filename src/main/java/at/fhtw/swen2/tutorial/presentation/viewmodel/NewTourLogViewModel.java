@@ -1,16 +1,14 @@
 package at.fhtw.swen2.tutorial.presentation.viewmodel;
 
 import at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty;
-import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
-import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
 import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.property.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
+@Component
 public class NewTourLogViewModel {
 
     private SimpleLongProperty id = new SimpleLongProperty();
@@ -22,15 +20,25 @@ public class NewTourLogViewModel {
     private SimpleFloatProperty totalTourTime = new SimpleFloatProperty();
     private SimpleIntegerProperty rating = new SimpleIntegerProperty();
 
-    private SimpleLongProperty tourId = new SimpleLongProperty();
+ //   private SimpleLongProperty tourId = new SimpleLongProperty();
     @Autowired
     private TourService tourService;
     @Autowired
     private TourLogListViewModel tourListLogViewModel;
 
     private TourLog tourLog;
+    private Tour tour;
     private Tour selectedTour;
 
+    public void setTourLog(TourLog tourLog) {
+        this.tourLog = tourLog;
+       // this.tour = tour;
+        this.id = new SimpleLongProperty(tourLog.getId());
+        this.comment = new SimpleStringProperty(tourLog.getComment());
+        this.tourDifficulty = new SimpleObjectProperty<>(tourLog.getTourDifficulty());
+        this.totalTourTime = new SimpleFloatProperty(tourLog.getTotalTourTime());
+        this.rating = new SimpleIntegerProperty(tourLog.getRating());
+    }
     public void setTourLog(TourLog tourLog, Tour selectedTour) {
         this.selectedTour = selectedTour;
         this.tourLog = tourLog;
@@ -101,8 +109,11 @@ public class NewTourLogViewModel {
         return rating;
     }
 
-    public void setSelectedTour(Tour tour) {
-        selectedTour = tour;
+    public Tour getTour() {
+        return tour;
+    }
+    public void setTour(Tour tour) {
+        this.tour =tour;
     }
 /*
     public long getTourId() {

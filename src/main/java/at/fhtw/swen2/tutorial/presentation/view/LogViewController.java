@@ -1,8 +1,11 @@
 package at.fhtw.swen2.tutorial.presentation.view;
 
 import at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty;
+import at.fhtw.swen2.tutorial.persistence.entities.TourLogEntity;
+import at.fhtw.swen2.tutorial.persistence.repositories.TourLogRepository;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.LogEntry;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.LogEntry.Type;
+import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,13 +14,16 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -40,11 +46,20 @@ public class LogViewController implements Initializable {
     private TextField totalTimeTextField;
     @FXML
     private TextField ratingTextField;
+    @Autowired
+    private TourLogRepository tourLogRepository;
+
+    public LogViewController(TourLogRepository tourLogRepository) {
+        this.tourLogRepository = tourLogRepository;
+    }
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTable();
         initilizeClearButton();
+        loadTourLogs();
     }
 
     //a helper method that binds the disableProperty of the clear button to the condition of whether the log table is empty. If the table is empty, the clear button will be disabled.
@@ -59,7 +74,7 @@ public class LogViewController implements Initializable {
         logTable.setItems(entries); // TODO load real log data
         logTable.setPlaceholder(new Label(""));
 
-        TableColumn<LogEntry, LocalDateTime> dateColumn = new TableColumn<>("Date");
+        TableColumn<LogEntry, LocalDateTime> dateColumn = new TableColumn<>("Date and Time");
         dateColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.25));
         dateColumn.setCellValueFactory(value -> value.getValue().getDate());
         dateColumn.setCellFactory(tableColumn -> new TableCell<>() {
@@ -69,24 +84,60 @@ public class LogViewController implements Initializable {
                 else this.setText(item.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")));
             }
         });
-
-        TableColumn<LogEntry, Type> typeColumn = new TableColumn<>("Comment");
-        typeColumn.setSortable(false);
-        typeColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
-        typeColumn.setCellValueFactory(value -> value.getValue().getType()); // replaced with image
-
-        TableColumn<LogEntry, String> systemColumn = new TableColumn<>("System");
-        systemColumn.setSortable(false);
-        systemColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.15));
-        systemColumn.setCellValueFactory(value -> value.getValue().getSystemName());
-
-        TableColumn<LogEntry, String> messageColumn = new TableColumn<>("Message");
+        TableColumn<LogEntry, String> messageColumn = new TableColumn<>("Comment");
         messageColumn.setSortable(false);
         messageColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.5));
         messageColumn.setCellValueFactory(value -> value.getValue().getComment());
         messageColumn.setMaxWidth(Double.MAX_VALUE);
 
-        logTable.getColumns().addAll(dateColumn, typeColumn, systemColumn, messageColumn);
+        TableColumn<LogEntry, TourDifficulty> difficultyColumn = new TableColumn<>("Difficulty");
+        difficultyColumn.setSortable(false);
+        difficultyColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
+        difficultyColumn.setCellValueFactory(value -> value.getValue().getTourDifficulty());
+
+        TableColumn<LogEntry, Float> totalTourTimeColumn = new TableColumn<>("Total Tour Time");
+        totalTourTimeColumn.setSortable(false);
+        totalTourTimeColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
+        totalTourTimeColumn.setCellValueFactory(value -> String.valueOf(value.getTotalTourTime());
+
+        TableColumn<LogEntry, Integer> ratingColumn = new TableColumn<>("Rating");
+        ratingColumn.setSortable(false);
+        ratingColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
+        ratingColumn.setCellValueFactory(value -> value.getValue().getRating());
+
+
+/*
+        TableColumn<LogEntry, Type> typeColumn = new TableColumn<>("Type");
+        typeColumn.setSortable(false);
+        typeColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
+        typeColumn.setCellValueFactory(value -> value.getValue().getType()); // replaced with image*/
+
+     /*   TableColumn<LogEntry, String> systemColumn = new TableColumn<>("System");
+        systemColumn.setSortable(false);
+        systemColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.15));
+        systemColumn.setCellValueFactory(value -> value.getValue().getSystemName());*/
+
+
+
+        logTable.getColumns().addAll(dateColumn,messageColumn, difficultyColumn, totalTourTimeColumn, ratingColumn );
+    }
+
+    void loadTourLogs() {
+        ObservableList<LogEntry> entries = FXCollections.observableArrayList();
+        List<TourLogEntity> tourLogs = tourLogRepository.findAll();
+        for (TourLogEntity tourLog : tourLogs) {
+            LogEntry.Type type;
+            if (tourLog.getType().equals("ERROR")) {
+                type = LogEntry.Type.ERROR;
+            } else if (tourLog.getType().equals("WARNING")) {
+                type = LogEntry.Type.WARNING;
+            } else {
+                type = LogEntry.Type.INFO;
+            }
+
+            entries.add(new LogEntry(type, tourLog.getSystemName(), tourLog.getComment()));
+        }
+        logTable.setItems(entries);
     }
 
     @FXML

@@ -1,11 +1,10 @@
 package at.fhtw.swen2.tutorial.presentation;
 
-import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
+import at.fhtw.swen2.tutorial.persistence.repositories.TourLogRepository;
 import at.fhtw.swen2.tutorial.presentation.view.ApplicationShutdownEvent;
 import at.fhtw.swen2.tutorial.presentation.view.AboutDialogController;
 import at.fhtw.swen2.tutorial.presentation.view.ModifyTourController;
 import at.fhtw.swen2.tutorial.presentation.view.NewTourLogController;
-import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourLogViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourLogListViewModel;
 import at.fhtw.swen2.tutorial.service.ExporterService;
@@ -17,10 +16,7 @@ import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -30,9 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -87,6 +81,7 @@ public class ApplicationController implements Initializable, StageAware {
     @FXML
     private VBox dataContainer;
     private Tour selectedTour;
+
     private TourLog tourLog;
 
     @Autowired
@@ -114,6 +109,7 @@ public class ApplicationController implements Initializable, StageAware {
 
 
     public ApplicationController(ApplicationEventPublisher publisher) {
+        this.tourLog = tourLog;
         log.debug("Initializing application controller");
         this.publisher = publisher;
     }
@@ -224,14 +220,14 @@ public class ApplicationController implements Initializable, StageAware {
 
     }
 
-    private void addNewTourLog(TourLog log, Tour selectedTour) throws  IOException {
+    private void addNewTourLog(TourLog tourLog,Tour selectedTour) throws  IOException {
 
         Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/TourLog", stage.getValue());
 
         dialog.initOwner(stage.getValue());
         dialog.setTitle("Create TourLog");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        newTourLogController.setTourLog(log, selectedTour);
+        newTourLogController.setTourLog(tourLog, selectedTour);
 
         dialog.showAndWait();
 
@@ -267,7 +263,7 @@ public class ApplicationController implements Initializable, StageAware {
         dialog.initOwner(stage.getValue());
         dialog.setTitle("Modify Tour");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        modifyTourController.setTour(selectedTour);
+       modifyTourController.setTour(selectedTour);
 
         dialog.showAndWait();
 

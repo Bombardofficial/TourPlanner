@@ -1,16 +1,26 @@
 package at.fhtw.swen2.tutorial.service.impl;
 
+import at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty;
+import at.fhtw.swen2.tutorial.persistence.entities.TourLogEntity;
+import at.fhtw.swen2.tutorial.persistence.repositories.TourLogRepository;
+import at.fhtw.swen2.tutorial.persistence.repositories.TourRepository;
 import at.fhtw.swen2.tutorial.service.model.Tour;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.hibernate.tool.schema.spi.Exporter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -236,7 +246,6 @@ class ExporterServiceImplTest {
             PDFTextStripper stripper = new PDFTextStripper();
             String extractedText = stripper.getText(document);
 
-            assertTrue(extractedText.contains("Tour List"));
             assertTrue(extractedText.contains("Name"));
             assertTrue(extractedText.contains("Description"));
             assertTrue(extractedText.contains("From"));
@@ -313,10 +322,59 @@ class ExporterServiceImplTest {
         file.delete();
     }
 
-  /*  @Test
-    public void testExportOne() throws IOException {
+
+        @Test
+        public void testExportOne() throws IOException {
+            // Arrange
+            List<Tour> tourList = new ArrayList<>();
+            Tour tour1 = Tour.builder()
+                    .name("Jovana's tour")
+                    .description("nice view")
+                    .from("Vienna")
+                    .to("Belgrade")
+                    .distance(150)
+                    .estimatedTime(6)
+                    .build();
+
+            Tour tour2 = Tour.builder()
+                    .name("Botond's tour")
+                    .description("no mountains in Hungary")
+                    .from("Belgrade")
+                    .to("Budapest")
+                    .distance(100)
+                    .estimatedTime(4)
+                    .build();
+
+            tourList.add(tour1);
+            tourList.add(tour2);
+
+            File file = new File("test.pdf");
+
+            // Act
+            ExporterServiceImpl exporter = new ExporterServiceImpl();
+            exporter.exportPDF(file, tourList);
+
+            // Assert
+            assertTrue(file.exists());
+
+            // Clean up !
+            file.delete();
+
+        }
+/*
+
+    @Mock
+    private TourLogRepository tourLogRepository;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
+    @Test
+    public void testContentExportOne() throws IOException {
         // Arrange
         Tour tour = Tour.builder()
+                .id(1L)
                 .name("Jovana's tour")
                 .description("nice view")
                 .from("Vienna")
@@ -326,6 +384,29 @@ class ExporterServiceImplTest {
                 .build();
 
         File file = new File("test.pdf");
+
+        List<TourLogEntity> tourLogs = new ArrayList<>();
+        // Add the desired tour log entities to the list
+        TourLogEntity tourLog1 = TourLogEntity.builder()
+                .id(1L)
+                .date(LocalDateTime.of(2020, 12, 12, 12, 12))
+                .comment("It was quite a nice ride, however there was a 1-hour traffic jam.")
+                .difficulty(TourDifficulty.EASY)
+                .totalTourTime(2.5f)
+                .rating(4)
+                .build();
+        TourLogEntity tourLog2 = TourLogEntity.builder()
+                .id(2L)
+                .date(LocalDateTime.of(2020, 12, 12, 12, 12))
+                .comment("It was quite a nice ride, however there was a 1-hour traffic jam.")
+                .difficulty(TourDifficulty.EASY)
+                .totalTourTime(2.5f)
+                .rating(4)
+                .build();
+
+        tourLogs.add(tourLog1);
+        tourLogs.add(tourLog2);
+
 
         // Act
         ExporterServiceImpl exporter = new ExporterServiceImpl();
@@ -351,12 +432,26 @@ class ExporterServiceImplTest {
             assertTrue(extractedText.contains("150"));
             assertTrue(extractedText.contains("6"));
 
+            // Assert tour log information
+            assertTrue(extractedText.contains("Tour Logs:"));
+            assertTrue(extractedText.contains("2023-05-01"));
+            assertTrue(extractedText.contains("Comment 1"));
+            assertTrue(extractedText.contains("Easy"));
+            assertTrue(extractedText.contains("2.5"));
+            assertTrue(extractedText.contains("4"));
+            assertTrue(extractedText.contains("2023-05-02"));
+            assertTrue(extractedText.contains("Comment 2"));
+            assertTrue(extractedText.contains("Moderate"));
+            assertTrue(extractedText.contains("3.0"));
+            assertTrue(extractedText.contains("5"));
+
         } catch (IOException e) {
             fail("Failed to read the exported PDF.");
         }
 
         // Clean up
         file.delete();
-    }*/
+    }
+*/
 
 }

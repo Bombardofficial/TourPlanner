@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static at.fhtw.swen2.tutorial.presentation.viewmodel.LogEntry.Type.INFO;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class TourLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-   // private LocalDateTime date;
+  //  private LocalDateTime date;
     private String comment;
     @Enumerated(EnumType.STRING)
     private TourDifficulty difficulty;
@@ -28,4 +30,12 @@ public class TourLogEntity {
     @ManyToOne
     @JoinColumn(name = "tour_id")
     private TourEntity tour;
+
+    public Object getType() {
+        return INFO;
+    }
+
+    public String getSystemName() {
+        return "null";
+    }
 }
