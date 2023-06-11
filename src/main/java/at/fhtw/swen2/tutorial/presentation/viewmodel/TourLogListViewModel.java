@@ -39,7 +39,8 @@ public class TourLogListViewModel {
 
     //delete
     public void initList() {
-        clearItems();
+        masterData.clear();
+        tourLogListItems.clear();
         // tourLogListItems.clear();
         tourService.getTourLogList(tourId).forEach(t -> {
             addItem(t);

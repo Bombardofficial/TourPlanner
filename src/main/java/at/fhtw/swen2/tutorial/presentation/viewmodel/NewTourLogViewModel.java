@@ -31,7 +31,8 @@ public class NewTourLogViewModel {
     private TourLog tourLog;
     private Tour selectedTour;
 
-    public void setTourLog(TourLog tourLog) {
+    public void setTourLog(TourLog tourLog, Tour selectedTour) {
+        this.selectedTour = selectedTour;
         this.tourLog = tourLog;
         this.id = new SimpleLongProperty(tourLog.getId());
         this.comment = new SimpleStringProperty(tourLog.getComment());

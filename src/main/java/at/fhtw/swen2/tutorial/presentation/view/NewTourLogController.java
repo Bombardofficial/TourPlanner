@@ -68,7 +68,7 @@ public class NewTourLogController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
 
-        //datetime
+       /* //datetime
 
         tableView.setItems(tourLogListViewModel.getTourLogItems());
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -77,14 +77,12 @@ public class NewTourLogController implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     selectedTour = row.getItem();
-                    System.out.println(selectedTour.getFrom());
-                    System.out.println(selectedTour.getTo());
 
                 }
             });
             return row;
-        });
-
+        });*/
+/*
         TableColumn comment = new TableColumn("COMMENT");
         comment.setCellValueFactory(new PropertyValueFactory("comment"));
         TableColumn difficulty = new TableColumn("DIFFICULTY");
@@ -98,14 +96,16 @@ public class NewTourLogController implements Initializable {
 
         dataContainer.getChildren().add(tableView);
         tourLogListViewModel.initList();
+        */
+
     }
 
 
-
+/*
     public void setTour(Tour tour) {
         selectedTour = tour;
         newTourLogViewModel.setSelectedTour(tour);
-    }
+    }*/
     public void submitButtonAction(ActionEvent event) {
         if(validateInput()) {
             newTourLogViewModel.setTourDifficulty(tourDifficultyChoiceBox.getValue());
@@ -164,15 +164,16 @@ public class NewTourLogController implements Initializable {
         }
     }
 
-    public void setTourLog(Tour selectedTour) {
-        setTour(selectedTour);
+    public void setTourLog(TourLog log, Tour selectedTour) {
+        newTourLogViewModel.setTourLog(log, selectedTour);
         commentTextArea.textProperty().bindBidirectional(newTourLogViewModel.commentProperty());
         tourDifficultyChoiceBox.getItems().setAll(TourDifficulty.values());
         newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
         totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
         ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
-
     }
+
+
     /*
     //setter
     public void modifyTourLog(TourLog tourLog) {

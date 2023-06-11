@@ -22,8 +22,8 @@ public class TourLog {
         private float totalTourTime;
         private int rating;
 
-        //private Tour tour;
-      // private Long TourId;
+        private Tour tour;
+       // private Long TourId;
 
 
 

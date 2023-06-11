@@ -71,9 +71,9 @@ class TourLogListViewModelTest {
         assertEquals(0, tourLogListItems.size(), "Tour list should be empty after clearing");
     }
 
+
+
 /*
-
-
     @Test
     public void testGetTourLogItems() {
 

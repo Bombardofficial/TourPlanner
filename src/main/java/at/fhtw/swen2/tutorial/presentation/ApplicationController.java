@@ -87,9 +87,11 @@ public class ApplicationController implements Initializable, StageAware {
     @FXML
     private VBox dataContainer;
     private Tour selectedTour;
+    private TourLog tourLog;
 
     @Autowired
     TourService tourService;
+
     @Autowired
     ExporterService exporter;
     @Autowired
@@ -179,7 +181,7 @@ public class ApplicationController implements Initializable, StageAware {
            menuItem4.setOnAction((event) -> {
                 selectedTour = row.getItem();
                 try {
-                    addNewTourLog(selectedTour);
+                    addNewTourLog(tourLog, selectedTour);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -222,15 +224,14 @@ public class ApplicationController implements Initializable, StageAware {
 
     }
 
-    private void addNewTourLog(Tour selectedTour) throws  IOException {
+    private void addNewTourLog(TourLog log, Tour selectedTour) throws  IOException {
 
         Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/TourLog", stage.getValue());
-
 
         dialog.initOwner(stage.getValue());
         dialog.setTitle("Create TourLog");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        newTourLogController.setTourLog(selectedTour);
+        newTourLogController.setTourLog(log, selectedTour);
 
         dialog.showAndWait();
 
