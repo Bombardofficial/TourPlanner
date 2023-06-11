@@ -2,6 +2,7 @@ package at.fhtw.swen2.tutorial.presentation.view;
 
 import at.fhtw.swen2.tutorial.persistence.entities.TourDifficulty;
 import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
+import at.fhtw.swen2.tutorial.presentation.ApplicationController;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourLogViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourViewModel;
 import at.fhtw.swen2.tutorial.service.TourService;
@@ -43,7 +44,7 @@ public class NewTourLogController implements Initializable {
     private ChoiceBox<LocalDateTime> localDateTimeChoiceBox;
     ///////////////
 
-    @FXML
+
     public TableView tableView = new TableView<>();
     @FXML
     private TextArea commentTextArea;
@@ -58,17 +59,11 @@ public class NewTourLogController implements Initializable {
 
 
     @Override
-    public void initialize(URL location, ResourceBundle rb) {/*
+    public void initialize(URL location, ResourceBundle rb) {
 
         //datetime
 
-        commentTextArea.textProperty().bindBidirectional(newTourLogViewModel.commentProperty());
-        tourDifficultyChoiceBox.getItems().setAll(TourDifficulty.values());
-        newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
-        totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
-        ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
-*/
-/*
+
         TableColumn<TourLog, String> commentColumn = new TableColumn<>("Comment");
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
@@ -81,7 +76,8 @@ public class NewTourLogController implements Initializable {
         TableColumn<TourLog, Integer> ratingColumn = new TableColumn<>("Rating");
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
 
-        tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn); */
+        tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn);
+
     }
 
     public void setTour(Tour tour) {
@@ -144,6 +140,16 @@ public class NewTourLogController implements Initializable {
         } else {
             return true;
         }
+    }
+
+    public void setTourLog(Tour selectedTour) {
+        setTour(selectedTour);
+        commentTextArea.textProperty().bindBidirectional(newTourLogViewModel.commentProperty());
+        tourDifficultyChoiceBox.getItems().setAll(TourDifficulty.values());
+        newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
+        totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
+        ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
+
     }
     /*
     //setter

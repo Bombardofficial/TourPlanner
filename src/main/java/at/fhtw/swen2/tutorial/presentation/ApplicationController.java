@@ -220,13 +220,13 @@ public class ApplicationController implements Initializable, StageAware {
 
     private void addNewTourLog(Tour selectedTour) throws  IOException {
 
-        Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/NewTourLog", stage.getValue());
+        Dialog<String> dialog = viewManager.load("/at/fhtw/swen2/tutorial/presentation/view/TourLog", stage.getValue());
 
 
         dialog.initOwner(stage.getValue());
-        dialog.setTitle("Modify Tour");
+        dialog.setTitle("Create TourLog");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        modifyTourController.setTour(selectedTour);
+        newTourLogController.setTourLog(selectedTour);
 
         dialog.showAndWait();
 
