@@ -7,6 +7,7 @@ import at.fhtw.swen2.tutorial.presentation.view.ModifyTourController;
 import at.fhtw.swen2.tutorial.presentation.view.NewTourLogController;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourLogViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
+import at.fhtw.swen2.tutorial.presentation.viewmodel.TourLogListViewModel;
 import at.fhtw.swen2.tutorial.service.ExporterService;
 import at.fhtw.swen2.tutorial.service.CsvImporterService;
 import at.fhtw.swen2.tutorial.service.MapQuestService;
@@ -102,6 +103,9 @@ public class ApplicationController implements Initializable, StageAware {
 
     @Autowired
     private NewTourLogController newTourLogController;
+
+    @Autowired
+    public TourLogListViewModel tourLogListViewModel;
 
   //  @Autowired
   //  private NewTourLogViewModel newTourLogListViewModel;
@@ -230,7 +234,7 @@ public class ApplicationController implements Initializable, StageAware {
 
         dialog.showAndWait();
 
-        tourListViewModel.initList();
+        tourLogListViewModel.initList();
     }
     private void exportOne(Tour selectedTour) throws IOException {
         FileChooser fileChooser = new FileChooser();

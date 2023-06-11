@@ -5,6 +5,8 @@ import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.presentation.ApplicationController;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourLogViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourViewModel;
+import at.fhtw.swen2.tutorial.presentation.viewmodel.TourListViewModel;
+import at.fhtw.swen2.tutorial.presentation.viewmodel.TourLogListViewModel;
 import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
@@ -14,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +37,8 @@ public class NewTourLogController implements Initializable {
 
     private NewTourLogViewModel newTourLogViewModel;
 
-
+    @Autowired
+    public TourLogListViewModel tourLogListViewModel;
 
     @FXML
     private Text feedbackLogText;
@@ -55,6 +59,9 @@ public class NewTourLogController implements Initializable {
     @FXML
     private TextField ratingField;
 
+    @FXML
+    private VBox dataContainer;
+
     private Tour selectedTour;
 
 
@@ -63,22 +70,37 @@ public class NewTourLogController implements Initializable {
 
         //datetime
 
+        tableView.setItems(tourLogListViewModel.getTourLogItems());
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setRowFactory(tv -> {
+            TableRow<Tour> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    selectedTour = row.getItem();
+                    System.out.println(selectedTour.getFrom());
+                    System.out.println(selectedTour.getTo());
 
-        TableColumn<TourLog, String> commentColumn = new TableColumn<>("Comment");
-        commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+                }
+            });
+            return row;
+        });
 
-        TableColumn<TourLog, String> difficultyColumn = new TableColumn<>("Difficulty");
-        difficultyColumn.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+        TableColumn comment = new TableColumn("COMMENT");
+        comment.setCellValueFactory(new PropertyValueFactory("comment"));
+        TableColumn difficulty = new TableColumn("DIFFICULTY");
+        difficulty.setCellValueFactory(new PropertyValueFactory("difficulty"));
+        TableColumn totalTourTime = new TableColumn("TOTAL TOUR TIME");
+        totalTourTime.setCellValueFactory(new PropertyValueFactory("totalTourTime"));
+        TableColumn rating = new TableColumn("RATING");
+        rating.setCellValueFactory(new PropertyValueFactory("rating"));
 
-        TableColumn<TourLog, Integer> totalTimeColumn = new TableColumn<>("Total Time");
-        totalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        tableView.getColumns().addAll(comment, difficulty, totalTourTime, rating);
 
-        TableColumn<TourLog, Integer> ratingColumn = new TableColumn<>("Rating");
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
-
-        tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn);
-
+        dataContainer.getChildren().add(tableView);
+        tourLogListViewModel.initList();
     }
+
+
 
     public void setTour(Tour tour) {
         selectedTour = tour;
