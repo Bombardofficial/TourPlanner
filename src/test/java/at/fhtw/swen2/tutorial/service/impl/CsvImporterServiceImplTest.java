@@ -3,18 +3,26 @@ package at.fhtw.swen2.tutorial.service.impl;
 import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.service.MapQuestService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CsvImporterServiceImplTest {
 
+
     @Test
-    public void testIsValidHeader_ValidHeader() {
+    public void testIsValidHeader() {
         // Arrange
         String validHeader = "Name;Description;From;To;Transport Type;Distance;Estimated Time";
 
@@ -52,46 +60,97 @@ class CsvImporterServiceImplTest {
         assertFalse(isValid);
     }
 /*
-    @Test
-    public void testImportFile_ValidCSVFile() {
-        // Arrange
-        CsvImporterServiceImpl importer = new CsvImporterServiceImpl();
-        File csvFile = new File("valid.csv");
+    @Mock
+    private CsvImporterServiceImpl csvImporterServiceImpl;
 
-        // Mock MapQuestService
-        MapQuestService mapQuestService = Mockito.mock(MapQuestService.class);
-        Mockito.when(mapQuestService.getMapByteArray(Mockito.anyString(), Mockito.anyString()))
-                .thenReturn(new byte[0]);
-        importer.mapQuestService = mapQuestService;
-
-        // Act
-        List<Tour> tourList;
-        try {
-            tourList = importer.importFile(csvFile);
-        } catch (Exception e) {
-            fail("Exception occurred: " + e.getMessage());
-            return;
-        }
-
-        // Assert
-        assertEquals(2, ((List<h.csv>) tourList).size());
-        assertEquals("Jovana's tour", tourList.get(0).getName());
-        assertEquals("nice view", tourList.get(0).getDescription());
-        assertEquals("Vienna", tourList.get(0).getFrom());
-        assertEquals("Belgrade", tourList.get(0).getTo());
-        assertEquals(TransportType.CAR, tourList.get(0).getTransportType());
-        assertEquals(150f, tourList.get(0).getDistance(), 0.001f);
-        assertEquals(6f, tourList.get(0).getEstimatedTime(), 0.001f);
-
-        assertEquals("Botond's tour", tourList.get(1).getName());
-        assertEquals("no mountains in Hungary", tourList.get(1).getDescription());
-        assertEquals("Belgrade", tourList.get(1).getFrom());
-        assertEquals("Budapest", tourList.get(1).getTo());
-        assertEquals(null, tourList.get(1).getTransportType());
-        assertEquals(100f, tourList.get(1).getDistance(), 0.001f);
-        assertEquals(4f, tourList.get(1).getEstimatedTime(), 0.001f);
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        csvImporterServiceImpl = new CsvImporterServiceImpl();
     }
 
+    @Test
+    void testPerformImport() throws Exception {
+        // Arrange
+        List<Tour> expectedTours = new ArrayList<>();
+        Tour tour1 = Tour.builder()
+                .name("Jovana's tour")
+                .description("nice view")
+                .from("Vienna")
+                .to("Belgrade")
+                .distance(150)
+                .estimatedTime(6)
+                .build();
+
+        Tour tour2 = Tour.builder()
+                .name("Botond's tour")
+                .description("no mountains in Hungary")
+                .from("Belgrade")
+                .to("Budapest")
+                .distance(100)
+                .estimatedTime(4)
+                .build();
+
+        expectedTours.add(tour1);
+        expectedTours.add(tour2);
+
+        // Create a temporary CSV file
+        File tempFile = File.createTempFile("testfile", ".csv");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+        writer.write("Name;Description;From;To;Transport Type;Distance;Estimated Time\n");
+        writer.write("Jovana's tour;nice view;Vienna;Belgrade;CAR;150;6\n");
+        writer.write("Botond's tour;no mountains in Hungary;Belgrade;Budapest;BUS;100;4\n");
+        writer.close();
+
+        // Act
+        List<Tour> importedTours = csvImporterServiceImpl.importFile(tempFile);
+
+        // Assert
+        assertEquals(expectedTours.size(), importedTours.size());
+        assertEquals(expectedTours, importedTours);
+    }
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        CsvImporterServiceImpl csvImporterServiceImpl = new CsvImporterServiceImpl();
+    }
+    @Test
+    void testPerformImport() throws Exception {
+        // Arrange
+        List<Tour> myTours = new ArrayList<>();
+        Tour tour1 = Tour.builder()
+                .name("Jovana's tour")
+                .description("nice view")
+                .from("Vienna")
+                .to("Belgrade")
+                .distance(150)
+                .estimatedTime(6)
+                .build();
+
+        Tour tour2 = Tour.builder()
+                .name("Botond's tour")
+                .description("no mountains in Hungary")
+                .from("Belgrade")
+                .to("Budapest")
+                .distance(100)
+                .estimatedTime(4)
+                .build();
+
+        myTours.add(tour1);
+        myTours.add(tour2);
+        CsvImporterServiceImpl csvImporterServiceImpl = new CsvImporterServiceImpl();
+        File file = new File("Jovi");
+
+        // Act
+        List<Tour> impoTours = csvImporterServiceImpl.importFile(file);
+
+        // Assert
+      //  assertEquals(myTours.size(), impoTours.size());
+        assertEquals(myTours, impoTours );
+       // assertNotEquals(new SimpleDateFormat("dd.MM.yyyy").parse("01.01.1970"), impoTours .get(0).getTourLogs().get(0).getDateTime());
+    }
+*/
     @Test
     public void testImportFile_InvalidCSVFile_InvalidFieldCount() {
         // Arrange
@@ -111,5 +170,5 @@ class CsvImporterServiceImplTest {
         // Act and Assert
         assertThrows(Exception.class, () -> importer.importFile(csvFile));
     }
-*/
+
 }

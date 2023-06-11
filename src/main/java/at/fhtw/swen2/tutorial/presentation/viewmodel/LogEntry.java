@@ -9,6 +9,12 @@ import java.time.LocalDateTime;
 
 @Getter
 public class LogEntry {
+
+
+    public LogEntry() {
+
+    }
+
     public static enum Type {
         ERROR,
         WARNING,
@@ -17,7 +23,7 @@ public class LogEntry {
 
     Property<Type> type = new SimpleObjectProperty<>(this, "");
     Property<LocalDateTime> date = new SimpleObjectProperty<>(this, "date");
-   // Property<String> systemName = new SimpleStringProperty(this, "systemName");
+    // Property<String> systemName = new SimpleStringProperty(this, "systemName");
     Property<String> comment = new SimpleStringProperty(this, "comment");
 
     Property<TourDifficulty> tourDifficulty = new SimpleObjectProperty<>(this, "tourDifficulty");
@@ -25,7 +31,7 @@ public class LogEntry {
     SimpleIntegerProperty rating = new SimpleIntegerProperty(this, "rating");
 
     public LogEntry(LocalDateTime date, String comment, TourDifficulty tourDifficulty, Float totalTourTime, Integer rating) {
-       // this.type.setValue(type);
+        // this.type.setValue(type);
         this.date.setValue(date);
         this.comment.setValue(comment);
         this.tourDifficulty.setValue(tourDifficulty);
@@ -57,20 +63,13 @@ public class LogEntry {
         dateProperty().setValue(date);
     }
 
-/*
-    public String getComment() {
-        return comment.getValue();
-    }
 
     public void setComment(String comment) {
-        this.comment.set(comment);
+        this.comment.setValue(comment);
     }
 
-    public StringProperty commentProperty() {
-        return comment;
-    }
-*/
-    public TourDifficulty getTourDifficulty() {
+
+    /*public TourDifficulty getTourDifficulty() {
         return tourDifficulty.get();
     }
 
@@ -80,7 +79,7 @@ public class LogEntry {
 
     public ObjectProperty<TourDifficulty> tourDifficultyProperty() {
         return tourDifficulty;
-    }
+    }*/
 
     public float getTotalTourTime() {
         return totalTourTime.get();
@@ -118,3 +117,4 @@ public class LogEntry {
         messageProperty().setValue(message);
     }*/
 }
+

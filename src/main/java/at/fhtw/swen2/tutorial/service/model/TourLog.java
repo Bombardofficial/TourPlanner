@@ -15,7 +15,7 @@ import java.util.Date;
 public class TourLog {
 
         private Long id;
-        //private LocalDateTime date;
+        private LocalDateTime date;
         private String comment;
         private TourDifficulty tourDifficulty;
         private float totalTourTime;

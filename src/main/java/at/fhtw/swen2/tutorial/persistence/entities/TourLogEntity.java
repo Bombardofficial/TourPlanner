@@ -20,7 +20,7 @@ public class TourLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-  //  private LocalDateTime date;
+    private LocalDateTime date;
     private String comment;
     @Enumerated(EnumType.STRING)
     private TourDifficulty difficulty;

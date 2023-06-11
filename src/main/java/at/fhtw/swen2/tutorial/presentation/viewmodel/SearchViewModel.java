@@ -9,9 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class SearchViewModel {
 
+    public SearchViewModel(TourLogListViewModel tourLogListViewModel, TourListViewModel tourListViewModel) {
+        this.tourLogListViewModel = tourLogListViewModel;
+        this.tourListViewModel = tourListViewModel;
+    }
+
     @Autowired
     private TourListViewModel tourListViewModel;
-
     @Autowired
     private TourLogListViewModel tourLogListViewModel;
 
