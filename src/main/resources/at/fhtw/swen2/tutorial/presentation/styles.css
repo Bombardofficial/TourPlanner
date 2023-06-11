@@ -1,3 +1,5 @@
+/* Light mode styles */
+
 /* Style the background */
 #layout {
     -fx-background-color: #f4f4f4;
@@ -202,4 +204,173 @@
 
 .log-view .log-entry:hover {
     -fx-background-color: #F7F7F7;
+}
+
+
+/* Dark mode styles */
+
+.dark-mode #layout {
+    -fx-background-color: #222222;
+}
+
+.dark-mode .menu-bar {
+    -fx-background-color: #333333;
+}
+
+.dark-mode .menu-item {
+    -fx-text-fill: white;
+}
+
+.dark-mode #searchBox {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+    -fx-prompt-text-fill: #aaa;
+}
+
+.dark-mode #newTourForm {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+}
+
+.dark-mode #tourList {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+}
+
+.dark-mode .tab-pane {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+}
+
+.dark-mode #logViewPane {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+}
+
+.dark-mode .input-field {
+    -fx-background-color: #444444;
+    -fx-border-color: #666666;
+}
+
+.dark-mode .submit-button {
+    -fx-background-color: #0077c2;
+    -fx-text-fill: white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-border-color: #0077c2;
+    -fx-cursor: hand;
+}
+
+.dark-mode .submit-button:hover {
+    -fx-background-color: #005ea3;
+}
+
+.dark-mode .tab:selected {
+    -fx-background-color: #0077c2;
+    -fx-text-fill: white;
+}
+
+.dark-mode .tab {
+    -fx-background-color: #444444;
+    -fx-text-fill: white;
+}
+
+.dark-mode .tour-item {
+    -fx-background-color: #333333;
+    -fx-border-color: #666666;
+    -fx-padding: 10px;
+}
+
+.dark-mode .tour-item:hover {
+    -fx-background-color: #222222;
+    -fx-border-color: #555555;
+}
+
+.dark-mode .tour-item .title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.dark-mode .tour-item .description {
+    -fx-font-size: 14px;
+    -fx-text-fill: #999999;
+}
+
+.dark-mode .tour-item .distance-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.dark-mode .tour-item .distance-value {
+    -fx-font-size: 14px;
+}
+
+.dark-mode .tour-item .time-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.dark-mode .tour-item .time-value {
+    -fx-font-size: 14px;
+}
+
+.dark-mode .search-button {
+    -fx-background-color: #0040FF;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+}
+
+.dark-mode .search-button:hover {
+    -fx-background-color: #0066FF;
+}
+
+.dark-mode .tour-list {
+    -fx-padding: 20px;
+    -fx-background-color: #222222;
+}
+
+.dark-mode .tab-pane {
+    -fx-background-color: #333333;
+}
+
+.dark-mode .tab-pane > .tab-header-area > .headers-region > .tab-header-background {
+    -fx-background-color: #333333;
+}
+
+.dark-mode .tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-container .tab {
+    -fx-background-color: #333333;
+    -fx-background-radius: 5px 5px 0px 0px;
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px 5px 0px 0px;
+}
+
+.dark-mode .tab-pane > .tab-header-area > .headers-region > .tab:hover .tab-container .tab {
+    -fx-background-color: #222222;
+}
+
+.dark-mode .log-view {
+    -fx-background-color: #222222;
+    -fx-padding: 10px;
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+    -fx-background-radius: 5px;
+}
+
+.dark-mode .log-view .log-entry {
+    -fx-background-color: #333333;
+    -fx-border-color: #555555;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-margin-bottom: 10px;
+}
+
+.dark-mode .log-view .log-entry:hover {
+    -fx-background-color: #222222;
 }

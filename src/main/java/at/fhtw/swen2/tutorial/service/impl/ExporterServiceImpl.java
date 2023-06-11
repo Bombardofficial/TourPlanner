@@ -182,7 +182,7 @@ public class ExporterServiceImpl implements ExporterService {
             logTable.setFontColor(ColorConstants.BLACK);
 
             for (TourLogEntity tourLogEntity : tourLogs) {
-              //  logTable.addCell(tourLogEntity.getDate().toString());
+                logTable.addCell(tourLogEntity.getDate().toString());
                 logTable.addCell(tourLogEntity.getComment());
                 logTable.addCell(String.valueOf(tourLogEntity.getDifficulty()));
                 logTable.addCell(Float.toString(tourLogEntity.getTotalTourTime()));

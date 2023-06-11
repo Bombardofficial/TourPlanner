@@ -74,7 +74,6 @@ public class LogViewController implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTable();
@@ -167,10 +166,8 @@ public class LogViewController implements Initializable {
 
 
 
-
-
-
-    //a helper method that binds the disableProperty of the clear button to the condition of whether the log table is empty. If the table is empty, the clear button will be disabled.
+    //a helper method that binds the disableProperty of the clear button to the condition of whether the log table is empty.
+    // If the table is empty, the clear button will be disabled.
     void initilizeClearButton() {
         clearButton.disableProperty().bind(Bindings.isEmpty(logTable.getItems()));
     }
@@ -212,20 +209,6 @@ public class LogViewController implements Initializable {
         ratingColumn.setSortable(false);
         ratingColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
         ratingColumn.setCellValueFactory(value -> new SimpleObjectProperty<>(value.getValue().getRating()));
-
-
-/*
-        TableColumn<LogEntry, Type> typeColumn = new TableColumn<>("Type");
-        typeColumn.setSortable(false);
-        typeColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.1));
-        typeColumn.setCellValueFactory(value -> value.getValue().getType()); // replaced with image*/
-
-     /*   TableColumn<LogEntry, String> systemColumn = new TableColumn<>("System");
-        systemColumn.setSortable(false);
-        systemColumn.prefWidthProperty().bind(logTable.widthProperty().multiply(0.15));
-        systemColumn.setCellValueFactory(value -> value.getValue().getSystemName());*/
-
-
 
         logTable.getColumns().addAll(dateColumn,messageColumn, difficultyColumn, totalTourTimeColumn, ratingColumn );
     }

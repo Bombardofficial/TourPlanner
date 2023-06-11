@@ -16,7 +16,10 @@ import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -26,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,26 @@ import java.util.ResourceBundle;
 @Slf4j
 public class ApplicationController implements Initializable, StageAware {
 
+
+
+
+    private static final String LIGHT_MODE = "light-mode";
+    private static final String DARK_MODE = "dark-mode";
+
+
+
+    @FXML
+    private void toggleDarkMode() {
+        if (layout.getStyleClass().contains(LIGHT_MODE)) {
+            layout.getStyleClass().remove(LIGHT_MODE);
+            layout.getStyleClass().add(DARK_MODE);
+        } else {
+            layout.getStyleClass().remove(DARK_MODE);
+            layout.getStyleClass().add(LIGHT_MODE);
+        }
+    }
+
+
     private static final Logger logger = LoggerFactory.getLogger(ApplicationController.class);
     ApplicationEventPublisher publisher;
 
@@ -60,7 +84,7 @@ public class ApplicationController implements Initializable, StageAware {
     private AnchorPane dataContainer2;
 
     private boolean showTour = true; // Initially show Tour.fxml
-    
+
     // Toolbar, at some point break out
     @FXML Label tbMonitorStatus;
     Circle monitorStatusIcon = new Circle(8);
@@ -104,8 +128,8 @@ public class ApplicationController implements Initializable, StageAware {
     @Autowired
     public TourLogListViewModel tourLogListViewModel;
 
-  //  @Autowired
-  //  private NewTourLogViewModel newTourLogListViewModel;
+    //  @Autowired
+    //  private NewTourLogViewModel newTourLogListViewModel;
 
 
     public ApplicationController(ApplicationEventPublisher publisher) {
@@ -117,6 +141,7 @@ public class ApplicationController implements Initializable, StageAware {
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         stage.addListener((obv, o, n) -> n.setTitle(rb.getString("app.title")));
+        layout.getStyleClass().add(LIGHT_MODE);
         Image mapImage = mapQuestService.getMap("Paris","Vienna");
         map.setImage(mapImage);
 
@@ -174,7 +199,7 @@ public class ApplicationController implements Initializable, StageAware {
                 }
             });
 
-           menuItem4.setOnAction((event) -> {
+            menuItem4.setOnAction((event) -> {
                 selectedTour = row.getItem();
                 try {
                     addNewTourLog(tourLog, selectedTour);
@@ -227,7 +252,7 @@ public class ApplicationController implements Initializable, StageAware {
         dialog.initOwner(stage.getValue());
         dialog.setTitle("Create TourLog");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        newTourLogController.setTourLog(tourLog, selectedTour);
+       // newTourLogController.setTourLog(tourLog, selectedTour);
 
         dialog.showAndWait();
 
@@ -244,7 +269,7 @@ public class ApplicationController implements Initializable, StageAware {
     }
 
 
-   private void delete(Tour selectedTour) {
+    private void delete(Tour selectedTour) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Delete " + selectedTour.getName() + " ?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
 
@@ -263,7 +288,7 @@ public class ApplicationController implements Initializable, StageAware {
         dialog.initOwner(stage.getValue());
         dialog.setTitle("Modify Tour");
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-       modifyTourController.setTour(selectedTour);
+        modifyTourController.setTour(selectedTour);
 
         dialog.showAndWait();
 
@@ -293,7 +318,7 @@ public class ApplicationController implements Initializable, StageAware {
         publisher.publishEvent(new ApplicationShutdownEvent(event.getSource()));
     }
 
-    @FXML 
+    @FXML
     public void onHelpAbout(ActionEvent event) {
         new AboutDialogController().show();
     }

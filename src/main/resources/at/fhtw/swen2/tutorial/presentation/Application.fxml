@@ -19,112 +19,111 @@
     <stylesheets>
         <URL value="@styles.css" />
     </stylesheets>
-   <top>
-      <MenuBar prefWidth="1842.0" BorderPane.alignment="CENTER">
-         <menus>
-            <Menu mnemonicParsing="false" text="%menu.file.title">
-               <items>
-                  <SeparatorMenuItem mnemonicParsing="false" />
-                   <MenuItem fx:id="miExport" mnemonicParsing="false" onAction="#onExport" text="%menu.file.export" />
-                   <MenuItem fx:id="miImport" mnemonicParsing="false" onAction="#onImport" text="%menu.file.import" />
-                  <MenuItem fx:id="miPreferences" mnemonicParsing="false" text="%menu.file.about" />
-                  <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onFileClose" text="%menu.file.quit" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="%menu.options.title">
-               <items>
-                  <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.options.info" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="%menu.edit.title">
-               <items>
-                  <MenuItem fx:id="miAbout1" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.edit.edit_log" />
+    <top>
+        <MenuBar prefWidth="1842.0" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="%menu.file.title">
+                    <items>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="miExport" mnemonicParsing="false" onAction="#onExport" text="%menu.file.export" />
+                        <MenuItem fx:id="miImport" mnemonicParsing="false" onAction="#onImport" text="%menu.file.import" />
+                        <MenuItem fx:id="miPreferences" mnemonicParsing="false" text="%menu.file.about" />
+                        <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onFileClose" text="%menu.file.quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="%menu.options.title">
+                    <items>
+                        <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.options.info" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Dark Mode">
+                    <items>
+                        <MenuItem text="Enable" onAction="#toggleDarkMode" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane minWidth="200.00" prefHeight="802.0" prefWidth="2127.0">
+            <children>
+                <fx:include source="view/Search.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <SplitPane dividerPositions="0.265" prefHeight="762.0" prefWidth="2114.0" AnchorPane.topAnchor="40.0">
+                    <!--  <items>
+                       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="2.7976931348623157E308" prefHeight="523.0" prefWidth="1000.0">
+                              <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
 
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-   </top>
-   <center>
-<AnchorPane minWidth="200.00" prefHeight="802.0" prefWidth="2127.0">
-<children>
-<fx:include source="view/Search.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-<SplitPane dividerPositions="0.265" prefHeight="762.0" prefWidth="2114.0" AnchorPane.topAnchor="40.0">
-    <!--  <items>
-       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="2.7976931348623157E308" prefHeight="523.0" prefWidth="1000.0">
-              <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
-
-              <TabPane maxWidth="-Infinity" prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
-                  <tabs>
-                      <Tab text="%tabone.firsttab.title">
-                          <content>
-                              <fx:include source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                          </content>
-                      </Tab>
-                      <Tab text="%tabone.secondtab.title">
-                          <content>
-                              <ScrollPane>
-                                  <ImageView fx:id="map" fitHeight="1000" fitWidth="1280" />
-                              </ScrollPane>
-                          </content>
-                      </Tab>
-                  </tabs>
-              </TabPane>
-          </AnchorPane>
-          -->
-
-
-        <items>
-
-            <AnchorPane prefWidth="2.7976931348623157E308" prefHeight="523.0">
-                <children>
-                    <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
-                    <fx:include fx:id="tour" source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                </children>
-               <!-- <Button text="Add Tour" onAction="#addNewTour" />
-                <Button text="Add TourLog" onAction="#addNewTourLog" />-->
-            </AnchorPane>
+                              <TabPane maxWidth="-Infinity" prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+                                  <tabs>
+                                      <Tab text="%tabone.firsttab.title">
+                                          <content>
+                                              <fx:include source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          </content>
+                                      </Tab>
+                                      <Tab text="%tabone.secondtab.title">
+                                          <content>
+                                              <ScrollPane>
+                                                  <ImageView fx:id="map" fitHeight="1000" fitWidth="1280" />
+                                              </ScrollPane>
+                                          </content>
+                                      </Tab>
+                                  </tabs>
+                              </TabPane>
+                          </AnchorPane>
+                          -->
 
 
-            <VBox prefWidth="1299.0" >
-            <TabPane minWidth="200.00" prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
-                <tabs>
-                    <Tab text="%tab.firsttab.title">
-                        <content>
-                            <fx:include fx:id="logViewPane" source="view/LogViewPane.fxml" />
-                        </content>
-                    </Tab>
-                    <Tab text="%tab.secondtab.title">
-                        <content>
-                            <ScrollPane>
-                                <ImageView fx:id="map" fitHeight="1000" fitWidth="1280" />
-                            </ScrollPane>
-                        </content>
-                    </Tab>
-                </tabs>
-            </TabPane>
+                    <items>
 
-            <AnchorPane prefWidth="1238.0">
-                <children>
-                    <TabPane prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
-                        <Tab text="%tab.bottomtab.title">
-                            <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+                        <AnchorPane prefWidth="2.7976931348623157E308" prefHeight="523.0">
+                            <children>
+                                <VBox layoutX="11.0" layoutY="145.0" prefHeight="200.0" prefWidth="200.0" />
+                                <fx:include fx:id="tour" source="view/NewTour.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                            <!-- <Button text="Add Tour" onAction="#addNewTour" />
+                             <Button text="Add TourLog" onAction="#addNewTourLog" />-->
+                        </AnchorPane>
+
+
+                        <VBox prefWidth="1299.0" >
+                            <TabPane minWidth="200.00" prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                    <Tab text="%tab.firsttab.title">
+                                        <content>
+                                            <fx:include fx:id="logViewPane" source="view/LogViewPane.fxml" />
+                                        </content>
+                                    </Tab>
+                                    <Tab text="%tab.secondtab.title">
+                                        <content>
+                                            <ScrollPane>
+                                                <ImageView fx:id="map" fitHeight="1000" fitWidth="1280" />
+                                            </ScrollPane>
+                                        </content>
+                                    </Tab>
+                                </tabs>
+                            </TabPane>
+
+                            <AnchorPane prefWidth="1238.0">
                                 <children>
-                                    <VBox fx:id="dataContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TabPane prefHeight="380.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+                                        <Tab text="%tab.bottomtab.title">
+                                            <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+                                                <children>
+                                                    <VBox fx:id="dataContainer" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                </children>
+                                            </AnchorPane>
+                                        </Tab>
+                                    </TabPane>
                                 </children>
                             </AnchorPane>
-                        </Tab>
-                    </TabPane>
-                </children>
-            </AnchorPane>
-        </VBox>
+                        </VBox>
 
 
-    </items>
-</SplitPane>
+                    </items>
+                </SplitPane>
 
-</children>
-</AnchorPane>
+            </children>
+        </AnchorPane>
 
-</center>
+    </center>
 </BorderPane>

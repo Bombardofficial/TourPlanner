@@ -64,7 +64,7 @@ public class DatabaseInitializer implements InitializingBean {
             TourEntity tour1 = lastThreeTours.get(0);
 
             TourLogEntity tourLog1 = TourLogEntity.builder()
-                    //.date(LocalDateTime.now())
+                    .date(LocalDateTime.now())
                     .comment("It was quite a nice ride, however there was a 1-hour traffic jam.")
                     .difficulty(TourDifficulty.EASY)
                     .totalTourTime(2.5f)
@@ -74,7 +74,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog1);
 
             TourLogEntity tourLog2 = TourLogEntity.builder()
-                    //.date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("The scenery was breathtaking, but the weather was a bit unpredictable.")
                     .difficulty(TourDifficulty.MODERATE)
                     .totalTourTime(3.0f)
@@ -84,7 +84,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog2);
 
             TourLogEntity tourLog3 = TourLogEntity.builder()
-                  //  .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("The tour was well-organized, and we enjoyed exploring the city.")
                     .difficulty(TourDifficulty.EASY)
                     .totalTourTime(2.0f)
@@ -98,7 +98,7 @@ public class DatabaseInitializer implements InitializingBean {
             TourEntity tour2 = lastThreeTours.get(1);
 
             TourLogEntity tourLog4 = TourLogEntity.builder()
-                  //  .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("It was a relaxing train journey with stunning views of the mountains.")
                     .difficulty(TourDifficulty.EASY)
                     .totalTourTime(2.5f)
@@ -108,7 +108,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog4);
 
             TourLogEntity tourLog5 = TourLogEntity.builder()
-                  //  .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("The train was crowded, but the journey was comfortable overall.")
                     .difficulty(TourDifficulty.MODERATE)
                     .totalTourTime(3.0f)
@@ -118,7 +118,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog5);
 
             TourLogEntity tourLog6 = TourLogEntity.builder()
-                   // .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("We had a great time exploring the local cuisine during the tour.")
                     .difficulty(TourDifficulty.EASY)
                     .totalTourTime(2.5f)
@@ -132,7 +132,7 @@ public class DatabaseInitializer implements InitializingBean {
             TourEntity tour3 = lastThreeTours.get(2);
 
             TourLogEntity tourLog7 = TourLogEntity.builder()
-                  //  .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("The hiking trail was challenging, but the views were worth it.")
                     .difficulty(TourDifficulty.DIFFICULT)
                     .totalTourTime(5.5f)
@@ -142,7 +142,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog7);
 
             TourLogEntity tourLog8 = TourLogEntity.builder()
-                  //  .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("We encountered some wildlife during the tour, which made it exciting.")
                     .difficulty(TourDifficulty.MODERATE)
                     .totalTourTime(4.0f)
@@ -152,7 +152,7 @@ public class DatabaseInitializer implements InitializingBean {
             tourLogList.add(tourLog8);
 
             TourLogEntity tourLog9 = TourLogEntity.builder()
-                   // .date(generateRandomDate())
+                    .date(generateRandomDate())
                     .comment("The tour guide was knowledgeable and provided interesting information.")
                     .difficulty(TourDifficulty.EASY)
                     .totalTourTime(3.5f)

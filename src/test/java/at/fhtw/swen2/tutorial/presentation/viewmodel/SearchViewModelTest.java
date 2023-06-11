@@ -7,67 +7,86 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.*;
 
 class SearchViewModelTest {
-/*
-    @Test
-    public void testSearch() {
-        // Arrange
-        String searchText = "your search text";
-        boolean searchTourLogs = true;
-
-        // Create the mock dependencies
-        TourLogListViewModel tourLogListViewModel = Mockito.mock(TourLogListViewModel.class);
-        TourListViewModel tourListViewModel = Mockito.mock(TourListViewModel.class);
-
-        // Create an instance of the class under test and set the mock dependencies
-        SearchViewModel searchViewModel = new SearchViewModel();
-        searchViewModel.setTourLogListViewModel(tourLogListViewModel);
-        searchViewModel.setTourListViewModel(tourListViewModel);
-
-        // Act
-        searchViewModel.search();
-
-        // Assert
-        if (searchTourLogs) {
-            verify(tourLogListViewModel).filterList(searchText);
-            verify(tourListViewModel, Mockito.never()).filterList(searchText);
-        } else {
-            verify(tourListViewModel).filterList(searchText);
-            verify(tourLogListViewModel, Mockito.never()).filterList(searchText);
-        }
-    }
-
-
-
-   @Mock
-   private TourLogListViewModel tourLogListViewModel;
-
+    @Mock
+    private TourLogListViewModel tourLogListViewModel;
     @Mock
     private TourListViewModel tourListViewModel;
+    private SearchViewModel searchViewModel;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        searchViewModel = new SearchViewModel(tourLogListViewModel, tourListViewModel);
+    }
 
     @Test
-    public void testSearch() {
-
-
+    public void testGetSearchString() {
         // Arrange
-        String searchText = "your search text";
-        boolean searchTourLogs = true;
-        SearchViewModel searchViewModel = new SearchViewModel(tourLogListViewModel, tourListViewModel);
+        searchViewModel.setSearchString("Vienna");
+
+        // Act
+        String searchString = searchViewModel.getSearchString();
+
+        // Assert
+        assertEquals("Vienna", searchString);
+    }
+
+    @Test
+    public void testSetSearchString() {
+        // Act
+        searchViewModel.setSearchString("Tour 1");
+
+        // Assert
+        assertEquals("Tour 1", searchViewModel.getSearchString());
+    }
+
+    @Test
+    public void testIsSearchForTourLogs() {
+        // Arrange
+        searchViewModel.setSearchForTourLogs(true);
+
+        // Act
+        boolean searchForTourLogs = searchViewModel.isSearchForTourLogs();
+
+        // Assert
+        assertEquals(true, searchForTourLogs);
+    }
+
+    @Test
+    public void testSetSearchForTourLogs() {
+        // Act
+        searchViewModel.setSearchForTourLogs(false);
+
+        // Assert
+        assertEquals(false, searchViewModel.isSearchForTourLogs());
+    }
+
+    @Test
+    public void testSearch_WhenSearchForTourLogsTrue() {
+        // Arrange
+        searchViewModel.setSearchString("Jovana's Tour");
+        searchViewModel.setSearchForTourLogs(true);
 
         // Act
         searchViewModel.search();
 
         // Assert
-        if (searchTourLogs) {
-            verify(tourLogListViewModel).filterList(searchText);
-            verify(tourListViewModel, Mockito.never()).filterList(searchText);
-        } else {
-            verify(tourListViewModel).filterList(searchText);
-            verify(tourLogListViewModel, Mockito.never()).filterList(searchText);
-        }
+        verify(tourLogListViewModel).filterList("Jovana's Tour");
     }
-*/
+
+    @Test
+    public void testSearch_notFound() {
+        // Arrange
+        searchViewModel.setSearchString(null);
+        searchViewModel.setSearchForTourLogs(false);
+
+        // Act
+        searchViewModel.search();
+
+        // Assert
+        verify(tourListViewModel).filterList(null);
+    }
 }

@@ -8,7 +8,7 @@
 
 <BorderPane minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhtw.swen2.tutorial.presentation.view.LogViewController">
    <center>
-      <TableView fx:id="logTable" prefHeight="-Infinity" prefWidth="-Infinity" BorderPane.alignment="CENTER" />
+      <TableView fx:id="logTable" maxHeight="-Infinity" maxWidth="900" minHeight="-Infinity" minWidth="900.0" prefWidth="900.0" BorderPane.alignment="CENTER_LEFT" />
    </center>
    <bottom>
       <HBox spacing="8.0" BorderPane.alignment="CENTER">

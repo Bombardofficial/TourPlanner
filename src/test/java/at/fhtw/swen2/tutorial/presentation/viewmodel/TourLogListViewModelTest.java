@@ -17,7 +17,6 @@ class TourLogListViewModelTest {
         // Arrange
         TourLog log1 = TourLog.builder()
                 .comment("cha cha cha")
-               // .LocalDateTime(2007-12-03T15:30:30.)
                 .tourDifficulty(MODERATE)
                 .totalTourTime(2)
                 .rating(4)
@@ -39,7 +38,6 @@ class TourLogListViewModelTest {
         // Arrange
         TourLog log1 = TourLog.builder()
                 .comment("cha cha cha")
-                // .LocalDateTime(2007-12-03T15:30:30.)
                 .tourDifficulty(MODERATE)
                 .totalTourTime(2)
                 .rating(4)
@@ -47,7 +45,6 @@ class TourLogListViewModelTest {
 
         TourLog log2 = TourLog.builder()
                 .comment("schön wars")
-                // .LocalDateTime(2007-12-03T15:30:30.)
                 .tourDifficulty(EASY)
                 .totalTourTime(2)
                 .rating(4)
@@ -64,37 +61,4 @@ class TourLogListViewModelTest {
         assertEquals(0, tourLogListItems.size(), "Tour list should be empty after clearing");
     }
 
-
-
-/*
-    @Test
-    public void testGetTourLogItems() {
-
-        TourLog log1 = TourLog.builder()
-                .comment("cha cha cha")
-                // .LocalDateTime(2007-12-03T15:30:30.)
-                .tourDifficulty(moderate)
-                .totalTourTime(2)
-                .rating(4)
-                .build();
-
-        TourLog log2 = TourLog.builder()
-                .comment("schön wars")
-                // .LocalDateTime(2007-12-03T15:30:30.)
-                .tourDifficulty(easy)
-                .totalTourTime(2)
-                .rating(4)
-                .build();
-
-
-        ObservableList<TourLog> tourLogList;
-        addAll(Arrays.asList(log1, log2));
-
-
-        //Act
-        ObservableList<TourLog> result = tourLogListViewModel.getTourLogItems();
-
-        // Assert das Liste gleiche Element wie original list hat
-        Assertions.assertEquals(tourLogList, result);
-    }*/
 }
