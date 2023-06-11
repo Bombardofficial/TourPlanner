@@ -6,6 +6,7 @@ import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourLogViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.NewTourViewModel;
 import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.TourService;
+import at.fhtw.swen2.tutorial.service.model.Tour;
 import at.fhtw.swen2.tutorial.service.model.TourLog;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,9 +54,11 @@ public class NewTourLogController implements Initializable {
     @FXML
     private TextField ratingField;
 
+    private Tour selectedTour;
+
 
     @Override
-    public void initialize(URL location, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle rb) {/*
 
         //datetime
 
@@ -64,7 +67,7 @@ public class NewTourLogController implements Initializable {
         newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
         totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
         ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
-
+*/
 /*
         TableColumn<TourLog, String> commentColumn = new TableColumn<>("Comment");
         commentColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -81,6 +84,10 @@ public class NewTourLogController implements Initializable {
         tableView.getColumns().addAll( commentColumn, difficultyColumn, totalTimeColumn, ratingColumn); */
     }
 
+    public void setTour(Tour tour) {
+        selectedTour = tour;
+        newTourLogViewModel.setSelectedTour(tour);
+    }
     public void submitButtonAction(ActionEvent event) {
         if(validateInput()) {
             newTourLogViewModel.setTourDifficulty(tourDifficultyChoiceBox.getValue());
@@ -89,7 +96,6 @@ public class NewTourLogController implements Initializable {
         }
 
     }
-
     private boolean validateInput() {
         StringBuilder errorMessage = new StringBuilder();
 
@@ -139,7 +145,17 @@ public class NewTourLogController implements Initializable {
             return true;
         }
     }
+    /*
+    //setter
+    public void modifyTourLog(TourLog tourLog) {
+        newTourLogViewModel.setTourLog(tourLog);
+        commentTextArea.textProperty().bindBidirectional(newTourLogViewModel.commentProperty());
+        tourDifficultyChoiceBox.getItems().setAll(TourDifficulty.values());
+        newTourLogViewModel.tourDifficultyProperty().bindBidirectional(tourDifficultyChoiceBox.valueProperty());
+        totalTourTimeField.textProperty().bindBidirectional(newTourLogViewModel.totalTourTimeProperty(), new NumberStringConverter());
+        ratingField.textProperty().bindBidirectional(newTourLogViewModel.ratingProperty(), new NumberStringConverter());
 
-
+    }
+*/
 
 }

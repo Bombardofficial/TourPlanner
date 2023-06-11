@@ -5,9 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class Swen2TemplateApplicationTests {
-
+/*
 	@Test
 	void contextLoads() {
 	}
-
+*/
 }

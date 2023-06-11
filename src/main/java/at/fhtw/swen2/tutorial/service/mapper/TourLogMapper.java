@@ -18,7 +18,7 @@ public class TourLogMapper extends AbstractMapper<TourLogEntity, TourLog>{
               //  .dateTime(entity.getDateTime())
                // .timeInMinutes(entity.getTotalTime())
                 .tourDifficulty(entity.getDifficulty())
-                .id(entity.getId())
+           //     .id(entity.getId())
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class TourLogMapper extends AbstractMapper<TourLogEntity, TourLog>{
               //  .tour(tourLogRepository.findById(tourLog.getTourId()).orElse(null))
              //   .totalTime(tourLog.getTimeInMinutes())
                 .difficulty(tourLog.getTourDifficulty())
-                .id(tourLog.getTourId())
+             //   .id(tourLog.getTourId())
 
                 .build();
     }

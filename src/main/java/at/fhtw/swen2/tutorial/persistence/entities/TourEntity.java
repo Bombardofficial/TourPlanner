@@ -33,4 +33,6 @@ public class TourEntity {
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<TourLogEntity> logs;
+
+
 }

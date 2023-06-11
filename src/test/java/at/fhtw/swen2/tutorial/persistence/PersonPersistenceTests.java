@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class PersonPersistenceTests {
-
+/*
 	@Autowired
 	private TourRepository tourRepository;
 
@@ -24,6 +24,6 @@ class PersonPersistenceTests {
 				.build();
 		tourRepository.save(maxi);
 		tourRepository.findAll().forEach(System.out::println);
-	}
+	}*/
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,6 @@ public class TourListViewModel {
 
     @Autowired
     private TourService tourService;
-
-
     private List<Tour> masterData = new ArrayList<>();
     private ObservableList<Tour> tourListItems = FXCollections.observableArrayList();
 
@@ -68,6 +67,7 @@ public class TourListViewModel {
         th.start();
 
     }
+
 
 
 }

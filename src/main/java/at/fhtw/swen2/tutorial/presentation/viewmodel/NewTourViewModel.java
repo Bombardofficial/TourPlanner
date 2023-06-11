@@ -4,6 +4,8 @@ import at.fhtw.swen2.tutorial.persistence.entities.TransportType;
 import at.fhtw.swen2.tutorial.service.TourService;
 import at.fhtw.swen2.tutorial.service.model.Tour;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,11 @@ public class NewTourViewModel {
 
     public NewTourViewModel() {
 
+    }
+    private ObservableList<Tour> tourListItems = FXCollections.observableArrayList();
+
+    public ObservableList<Tour> getTourListItems() {
+        return tourListItems;
     }
 
     public NewTourViewModel(Tour tour) {

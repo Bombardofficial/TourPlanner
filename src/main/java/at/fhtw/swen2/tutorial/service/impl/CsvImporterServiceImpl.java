@@ -65,7 +65,7 @@ public class CsvImporterServiceImpl implements CsvImporterService {
         return tourList;
     }
 
-    private boolean isValidHeader(String headerLine) {
+    public boolean isValidHeader(String headerLine) {
         String[] fields = headerLine.split(CSV_SEPARATOR);
 
         // Validate number of fields

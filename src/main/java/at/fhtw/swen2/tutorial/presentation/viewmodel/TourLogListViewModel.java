@@ -37,6 +37,7 @@ public class TourLogListViewModel {
         tourLogListItems.clear();
     }
 
+    //delete
     public void initList() {
         clearItems();
         // tourLogListItems.clear();
@@ -66,6 +67,7 @@ public class TourLogListViewModel {
         th.start();
 
     }
+
 
 
 }
